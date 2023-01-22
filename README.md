@@ -8,7 +8,7 @@
 - Suspend, resume, kill process
 - Dump any process main module using a kernel driver (both x86 and x64)
 - Rebuild PE32/PE64 header and sections
-- ^ This can be defeated by stripping pe headers.
+- ^ This can be defeated by stripping pe headers. Once pe headers are stripped, it cant dump.
 - Works on protected system processes & processes with stripped handles (anti-cheats)
 - Works on Windows 11, it doesnt crash anymore!
 ![Dev Channel Insider Build Win 11 Ksdumper](https://cdn.discordapp.com/attachments/1022996250037076047/1066538037154152548/image.png)
