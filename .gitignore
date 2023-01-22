@@ -348,3 +348,8 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/KsDumper11/Driver/KsDumperDriver.sys.w
+/KsDumper11/Driver/KsDumperDriver.sys.BrokenUnloader
+/KsDumper11/Driver/KsDumperDriver.sys.1
+/KsDumperDriver
+/PEHeadersTesting
