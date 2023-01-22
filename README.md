@@ -11,7 +11,7 @@
 - Rebuild PE32/PE64 header and sections
 - Works on protected system processes & processes with stripped handles (anti-cheats)
 - Works on WINDOWS 11, it doesnt crash anymore!
-![Dev Channel Insider Build Win 11 Ksdumper](https://cdn.discordapp.com/attachments/1022996250037076047/1066526468831723590/image.png)
+![Dev Channel Insider Build Win 11 Ksdumper](https://cdn.discordapp.com/attachments/1022996250037076047/1066538037154152548/image.png)
 
 **Note**: Import table isn't rebuilt.
 
