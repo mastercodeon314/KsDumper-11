@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KsDumperDriver", "KsDumperDriver\KsDumperDriver.vcxproj", "{8EADAB93-F111-43AF-9E10-2376AE515491}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KsDumperClient", "KsDumperClient\KsDumperClient.csproj", "{7881B99D-0B5A-44E7-AF34-80A0ECFFD5DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DarkControls", "..\DarkControls\DarkControls\DarkControls.csproj", "{66C94ACB-63C7-42A3-9D83-A3801CED4F1C}"
@@ -17,12 +15,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8EADAB93-F111-43AF-9E10-2376AE515491}.Debug|Any CPU.ActiveCfg = Release|x64
-		{8EADAB93-F111-43AF-9E10-2376AE515491}.Debug|x64.ActiveCfg = Release|x64
-		{8EADAB93-F111-43AF-9E10-2376AE515491}.Debug|x64.Build.0 = Release|x64
-		{8EADAB93-F111-43AF-9E10-2376AE515491}.Release|Any CPU.ActiveCfg = Release|x64
-		{8EADAB93-F111-43AF-9E10-2376AE515491}.Release|x64.ActiveCfg = Release|x64
-		{8EADAB93-F111-43AF-9E10-2376AE515491}.Release|x64.Build.0 = Release|x64
 		{7881B99D-0B5A-44E7-AF34-80A0ECFFD5DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7881B99D-0B5A-44E7-AF34-80A0ECFFD5DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7881B99D-0B5A-44E7-AF34-80A0ECFFD5DB}.Debug|x64.ActiveCfg = Debug|x64
