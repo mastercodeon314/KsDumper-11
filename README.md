@@ -30,6 +30,12 @@ I tried to build a logger to output kdu's console output to a file, however it w
 **Note2**: Even though it can dump both x86 & x64 processes, this has to run on x64 Windows.
 
 ## Disclaimer
+Due to the nature of how KSU works to map the kernel driver, it is unknown if the system you run this on 
+will have a exploitable driver according to kdu providers.
+If you try to boot KsDumper 11 and it fails to start the driver, trying again as administrator.
+If it still fails, run the included ManualLoad.bat in the driver folder and post the results as an issue. 
+I will be working on making a selector that will get the correct provider for your system, or detect if none are available. 
+
 This project has been made available for informational and educational purposes only.
 The driver source is not included because i couldnt ever get it to compile on my system. The source can be found on the original reop. 
 Considering the nature of this project, it is highly recommended to run it in a `Virtual Environment`. I am not responsible for any crash or damage that could happen to your system.
