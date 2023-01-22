@@ -27,7 +27,7 @@ All driver loading is now automated, i plan on putting in a splash screen till t
 For now, the client wont open until the driver has been loaded, if it fails, it exits. 
 I tried to build a logger to output kdu's console output to a file, however it writes black always. Known issue
 
-**Note**: The driver stays loaded until you reboot, so if you close KsDumperClient.exe, you can just reopen it !  
+**Note**: The driver stays loaded until you reboot, so if you close KsDumper11.exe, you can just reopen it !  
 **Note2**: Even though it can dump both x86 & x64 processes, this has to run on x64 Windows.
 
 ## Disclaimer
