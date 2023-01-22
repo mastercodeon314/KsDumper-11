@@ -37,6 +37,7 @@ Considering the nature of this project, it is highly recommended to run it in a 
 **Important**: This tool makes no attempt at hiding itself. If you target protected games, the anti-cheat might flag this as a cheat and ban you after a while. Use a `Virtual Environment` !
 
 ## References
+= https://github.com/EquiFox/KsDumper
 - https://github.com/hfiref0x/KDU
 - https://github.com/morelli690/KDU_kernel_bypass_/blob/master/Bin/kdu.exe
 - https://github.com/not-wlan/drvmap
