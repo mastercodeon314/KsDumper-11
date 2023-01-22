@@ -35,8 +35,8 @@ namespace KsDumper11
 				outputStream = File.OpenWrite(logPath);
 			}
 			StreamWriter wr = new StreamWriter(outputStream);
-			bool flag2 = !new DriverInterface("\\\\.\\KsDumper").HasValidHandle();
-			if (flag2)
+			bool driverOpen = new DriverInterface("\\\\.\\KsDumper").HasValidHandle();
+			if (!driverOpen)
 			{
 				ProcessStartInfo inf = new ProcessStartInfo(Environment.CurrentDirectory + "\\Driver\\kdu.exe", " -prv 1 -map .\\Driver\\KsDumperDriver.sys")
 				{
