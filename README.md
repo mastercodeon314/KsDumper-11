@@ -1,5 +1,4 @@
 # KsDumper-11
-# KsDumper
 ![Demo](https://i.imgur.com/6XyMDxa.gif)
 ^New Demo gif comming soon
 
@@ -10,7 +9,7 @@
 - Dump any process main module using a kernel driver (both x86 and x64)
 - Rebuild PE32/PE64 header and sections
 - Works on protected system processes & processes with stripped handles (anti-cheats)
-- Works on WINDOWS 11, it doesnt crash anymore!
+- Works on Windows 11, it doesnt crash anymore!
 ![Dev Channel Insider Build Win 11 Ksdumper](https://cdn.discordapp.com/attachments/1022996250037076047/1066538037154152548/image.png)
 
 **Note**: Import table isn't rebuilt.
