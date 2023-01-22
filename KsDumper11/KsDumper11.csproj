@@ -25,7 +25,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>..\..\..\..\..\..\VM Share\KsDumper VM\KsDumper v1.1\</OutputPath>
+    <OutputPath>bin\Release\x64\</OutputPath>
     <DefineConstants>TRACE;WIN64</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -80,6 +80,9 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Default.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -154,6 +157,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Default.ico" />
     <Content Include="Driver\drv64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -166,7 +170,7 @@
     <None Include="icons8-crossed-axes-100.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DarkControls\DarkControls\DarkControls.csproj">
+    <ProjectReference Include="..\DarkControls\DarkControls.csproj">
       <Project>{66c94acb-63c7-42a3-9d83-a3801ced4f1c}</Project>
       <Name>DarkControls</Name>
     </ProjectReference>
