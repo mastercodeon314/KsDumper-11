@@ -1,5 +1,5 @@
 # KsDumper-11
-![Demo](https://i.imgur.com/6XyMDxa.gif)
+![Demo](https://cdn.discordapp.com/attachments/1022996250037076047/1066941294691221574/KsDumper_v1.1_Update_Demo.mp4)
 ^New Demo gif comming soon
 
 ## Features
