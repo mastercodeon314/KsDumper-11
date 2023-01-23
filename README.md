@@ -4,6 +4,8 @@
 
 ## Features
 - Auto dumping of selected exe.
+- Unloading the KsDumper kernel driver is now supported! An option was added to unload on program exit, or system shutdown/restart.
+- Splash screen for when driver is being loaded
 - Auto Refresh (every 100ms)
 - Suspend, resume, kill process
 - Dump any process main module using a kernel driver (both x86 and x64)
