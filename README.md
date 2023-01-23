@@ -1,5 +1,5 @@
 # KsDumper-11
-https://user-images.githubusercontent.com/78676320/213967527-ba0d435d-9d92-467d-bd9f-4e85f947dfa0.mp4
+![Demo](https://user-images.githubusercontent.com/78676320/213967527-ba0d435d-9d92-467d-bd9f-4e85f947dfa0.mp4)
 
 ## Features
 - Auto dumping of selected exe.
