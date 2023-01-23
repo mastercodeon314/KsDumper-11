@@ -43,6 +43,7 @@
             this.EntryPointHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ImageSizeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ImageTypeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.closeDriverOnExitBox = new DarkControls.Controls.DarkCheckBox();
             this.groupBox1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.appIcon1)).BeginInit();
@@ -130,6 +131,7 @@
             // 
             this.appIcon1.AppIconImage = global::KsDumper11.Properties.Resources.icons8_crossed_axes_100;
             this.appIcon1.DragForm = this;
+            this.appIcon1.Image = ((System.Drawing.Image)(resources.GetObject("appIcon1.Image")));
             this.appIcon1.Location = new System.Drawing.Point(5, 4);
             this.appIcon1.Name = "appIcon1";
             this.appIcon1.Scale = 3.5F;
@@ -142,7 +144,7 @@
             this.fileDumpBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.fileDumpBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.fileDumpBtn.ForeColor = System.Drawing.Color.Silver;
-            this.fileDumpBtn.Location = new System.Drawing.Point(216, 49);
+            this.fileDumpBtn.Location = new System.Drawing.Point(227, 49);
             this.fileDumpBtn.Name = "fileDumpBtn";
             this.fileDumpBtn.Size = new System.Drawing.Size(75, 23);
             this.fileDumpBtn.TabIndex = 1;
@@ -180,7 +182,7 @@
             this.refreshBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.refreshBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.refreshBtn.ForeColor = System.Drawing.Color.Silver;
-            this.refreshBtn.Location = new System.Drawing.Point(5, 49);
+            this.refreshBtn.Location = new System.Drawing.Point(12, 49);
             this.refreshBtn.Name = "refreshBtn";
             this.refreshBtn.Size = new System.Drawing.Size(75, 23);
             this.refreshBtn.TabIndex = 10;
@@ -196,7 +198,7 @@
             this.autoRefreshCheckBox.CheckColor = System.Drawing.Color.CornflowerBlue;
             this.autoRefreshCheckBox.FlatAppearance.BorderSize = 0;
             this.autoRefreshCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.autoRefreshCheckBox.Location = new System.Drawing.Point(86, 46);
+            this.autoRefreshCheckBox.Location = new System.Drawing.Point(93, 49);
             this.autoRefreshCheckBox.Name = "autoRefreshCheckBox";
             this.autoRefreshCheckBox.Size = new System.Drawing.Size(98, 23);
             this.autoRefreshCheckBox.TabIndex = 11;
@@ -280,12 +282,30 @@
             this.ImageTypeHeader.Text = "Image Type";
             this.ImageTypeHeader.Width = 76;
             // 
+            // closeDriverOnExitBox
+            // 
+            this.closeDriverOnExitBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.closeDriverOnExitBox.BoxBorderColor = System.Drawing.Color.DarkSlateBlue;
+            this.closeDriverOnExitBox.BoxFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+            this.closeDriverOnExitBox.CheckColor = System.Drawing.Color.CornflowerBlue;
+            this.closeDriverOnExitBox.FlatAppearance.BorderSize = 0;
+            this.closeDriverOnExitBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.closeDriverOnExitBox.Location = new System.Drawing.Point(723, 49);
+            this.closeDriverOnExitBox.Name = "closeDriverOnExitBox";
+            this.closeDriverOnExitBox.Size = new System.Drawing.Size(133, 23);
+            this.closeDriverOnExitBox.TabIndex = 13;
+            this.closeDriverOnExitBox.Text = "Close Driver on Exit";
+            this.closeDriverOnExitBox.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.closeDriverOnExitBox.UseVisualStyleBackColor = true;
+            this.closeDriverOnExitBox.CheckedChanged += new System.EventHandler(this.closeDriverOnExitBox_CheckedChanged);
+            // 
             // Dumper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.ClientSize = new System.Drawing.Size(1009, 746);
+            this.Controls.Add(this.closeDriverOnExitBox);
             this.Controls.Add(this.hideSystemProcessBtn);
             this.Controls.Add(this.autoRefreshCheckBox);
             this.Controls.Add(this.refreshBtn);
@@ -384,5 +404,6 @@
 
 		// Token: 0x0400002A RID: 42
 		private global::System.Windows.Forms.Button hideSystemProcessBtn;
-	}
+        private DarkControls.Controls.DarkCheckBox closeDriverOnExitBox;
+    }
 }

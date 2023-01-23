@@ -14,10 +14,19 @@ namespace KsDumper11
 		[STAThread]
 		private static void Main()
 		{
-			Program.StartDriver();
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Dumper());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            bool driverOpen = DriverInterface.IsDriverOpen("\\\\.\\KsDumper");
+            if (!driverOpen)
+			{
+                Application.Run(new SplashForm());
+                Application.Run(new Dumper());
+            }
+			else
+			{
+                Application.Run(new Dumper());
+            }
 		}
 
 		// Token: 0x0600004C RID: 76 RVA: 0x000042D0 File Offset: 0x000024D0
@@ -35,29 +44,28 @@ namespace KsDumper11
 				outputStream = File.OpenWrite(logPath);
 			}
 			StreamWriter wr = new StreamWriter(outputStream);
-			bool driverOpen = new DriverInterface("\\\\.\\KsDumper").HasValidHandle();
+
+            bool driverOpen = DriverInterface.IsDriverOpen("\\\\.\\KsDumper");
 			if (!driverOpen)
 			{
 				ProcessStartInfo inf = new ProcessStartInfo(Environment.CurrentDirectory + "\\Driver\\kdu.exe", " -prv 1 -map .\\Driver\\KsDumperDriver.sys")
 				{
 					CreateNoWindow = true,
 					UseShellExecute = false,
-					RedirectStandardOutput = true,
-					RedirectStandardError = true
+					//RedirectStandardOutput = true,
+					//RedirectStandardError = true
 				};
 				Process proc = Process.Start(inf);
 				proc.OutputDataReceived += delegate(object sender, DataReceivedEventArgs e)
 				{
-					bool flag4 = !string.IsNullOrEmpty(e.Data);
-					if (flag4)
+					if (!string.IsNullOrEmpty(e.Data))
 					{
 						wr.WriteLine(e.Data);
 					}
 				};
 				proc.ErrorDataReceived += delegate(object sender, DataReceivedEventArgs e)
 				{
-					bool flag4 = !string.IsNullOrEmpty(e.Data);
-					if (flag4)
+					if (!string.IsNullOrEmpty(e.Data))
 					{
 						wr.WriteLine(e.Data);
 					}
@@ -67,8 +75,8 @@ namespace KsDumper11
 				wr.Close();
 				outputStream.Close();
 				outputStream.Dispose();
-				bool flag3 = !new DriverInterface("\\\\.\\KsDumper").HasValidHandle();
-				if (flag3)
+                driverOpen = DriverInterface.IsDriverOpen("\\\\.\\KsDumper");
+                if (!driverOpen)
 				{
 					MessageBox.Show("Error! Tried to start driver, and it failed to start!");
 					Environment.Exit(0);

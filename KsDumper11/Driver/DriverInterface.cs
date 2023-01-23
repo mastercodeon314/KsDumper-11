@@ -8,8 +8,16 @@ namespace KsDumper11.Driver
 	// Token: 0x02000014 RID: 20
 	public class DriverInterface
 	{
-		// Token: 0x060000D9 RID: 217 RVA: 0x00005D59 File Offset: 0x00003F59
-		public DriverInterface(string registryPath)
+        public static bool IsDriverOpen(string registryPath)
+        {
+            IntPtr handle = WinApi.CreateFileA(registryPath, FileAccess.ReadWrite, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, (FileAttributes)0, IntPtr.Zero);
+            bool result = handle != WinApi.INVALID_HANDLE_VALUE;
+            WinApi.CloseHandle(handle);
+            return result;
+        }
+
+        // Token: 0x060000D9 RID: 217 RVA: 0x00005D59 File Offset: 0x00003F59
+        public DriverInterface(string registryPath)
 		{
 			this.driverHandle = WinApi.CreateFileA(registryPath, FileAccess.ReadWrite, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, (FileAttributes)0, IntPtr.Zero);
 		}
@@ -109,7 +117,35 @@ namespace KsDumper11.Driver
 			return flag2;
 		}
 
-		// Token: 0x04000075 RID: 117
-		private readonly IntPtr driverHandle;
-	}
+        public bool UnloadDriver()
+        {
+            if (driverHandle != WinApi.INVALID_HANDLE_VALUE)
+            {
+				bool result = WinApi.DeviceIoControl(driverHandle, Operations.IO_UNLOAD_DRIVER, IntPtr.Zero, 0, IntPtr.Zero, 0, IntPtr.Zero, IntPtr.Zero);
+				this.Dispose();
+				return result;
+            }
+            return false;
+        }
+
+        // Token: 0x04000075 RID: 117
+        private readonly IntPtr driverHandle;
+
+        public void Dispose()
+        {
+            WinApi.CloseHandle(driverHandle);
+        }
+
+        ~DriverInterface()
+        {
+			try
+			{
+				WinApi.CloseHandle(driverHandle);
+			}
+			catch (Exception ex)
+			{
+				return;
+			}
+        }
+    }
 }

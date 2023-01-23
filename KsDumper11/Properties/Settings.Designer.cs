@@ -22,5 +22,17 @@ namespace KsDumper11.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool closeDriverOnExitSettings {
+            get {
+                return ((bool)(this["closeDriverOnExitSettings"]));
+            }
+            set {
+                this["closeDriverOnExitSettings"] = value;
+            }
+        }
     }
 }
