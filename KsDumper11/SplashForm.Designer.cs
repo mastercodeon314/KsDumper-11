@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.progressBar = new DarkControls.ProgressBarEx();
+            this.progressBar = new DarkControls.Controls.ProgressBarEx();
             this.statusLbl = new DarkControls.Controls.TransparentLabel();
             this.transparentLabel1 = new DarkControls.Controls.TransparentLabel();
             this.SuspendLayout();
@@ -84,7 +84,7 @@
 
         #endregion
         private DarkControls.Controls.TransparentLabel transparentLabel1;
-        private DarkControls.ProgressBarEx progressBar;
+        private DarkControls.Controls.ProgressBarEx progressBar;
         private DarkControls.Controls.TransparentLabel statusLbl;
     }
 }
