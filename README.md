@@ -1,6 +1,5 @@
 # KsDumper-11
-![Demo](https://cdn.discordapp.com/attachments/1022996250037076047/1066941294691221574/KsDumper_v1.1_Update_Demo.mp4)
-^New Demo gif comming soon
+https://user-images.githubusercontent.com/78676320/213967527-ba0d435d-9d92-467d-bd9f-4e85f947dfa0.mp4
 
 ## Features
 - Auto dumping of selected exe.
