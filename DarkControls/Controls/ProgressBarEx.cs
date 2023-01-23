@@ -13,10 +13,10 @@ namespace DarkControls.Controls
         public ProgressBarEx()
         {
             this.SetStyle(ControlStyles.UserPaint, true);
-            //_marqueeTimer = new Timer();
-            //_marqueeTimer.Interval = MarqueeAnimationSpeed;
-            //_marqueeTimer.Tick += new EventHandler(marqueeTimer_Tick);
-            //_marqueeTimer.Start();
+            _marqueeTimer = new Timer();
+            _marqueeTimer.Interval = MarqueeAnimationSpeed;
+            _marqueeTimer.Tick += new EventHandler(marqueeTimer_Tick);
+            _marqueeTimer.Start();
         }
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
@@ -36,7 +36,7 @@ namespace DarkControls.Controls
                 int blockWidth = 5;
                 int blockSpacing = 2;
                 int blockCount = (this.Width - 2) / (blockWidth + blockSpacing);
-                int offset = DateTime.Now.Second % (blockCount + blockSpacing);
+                int offset = DateTime.Now.Millisecond % (blockCount + blockSpacing);
 
                 using (Image offscreenImage = new Bitmap(this.Width, this.Height))
                 {

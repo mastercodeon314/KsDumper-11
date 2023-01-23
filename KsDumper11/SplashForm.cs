@@ -103,7 +103,7 @@ namespace KsDumper11
 
         private void SplashForm_Load(object sender, EventArgs e)
         {
-            StartProgressBar();
+            //StartProgressBar();
             Task.Run(() =>
             {
                 StartDriver();

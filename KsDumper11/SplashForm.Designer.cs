@@ -28,18 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.progressBar = new DarkControls.Controls.ProgressBarEx();
             this.statusLbl = new DarkControls.Controls.TransparentLabel();
+            this.progressBar = new DarkControls.Controls.ProgressBarEx();
             this.transparentLabel1 = new DarkControls.Controls.TransparentLabel();
             this.SuspendLayout();
-            // 
-            // progressBar
-            // 
-            this.progressBar.Location = new System.Drawing.Point(12, 108);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(660, 23);
-            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar.TabIndex = 9;
             // 
             // statusLbl
             // 
@@ -49,6 +41,14 @@
             this.statusLbl.Name = "statusLbl";
             this.statusLbl.Size = new System.Drawing.Size(0, 24);
             this.statusLbl.TabIndex = 10;
+            // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(12, 108);
+            this.progressBar.MarqueeAnimationSpeed = 750;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(660, 23);
+            this.progressBar.TabIndex = 9;
             // 
             // transparentLabel1
             // 
