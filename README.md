@@ -24,8 +24,8 @@ I could not get the main fork of the program to work when being built from sourc
 This one does though.
 https://github.com/morelli690/KDU_kernel_bypass_/blob/master/Bin/kdu.exe
 
-All driver loading is now automated, The splash sscreen is done, and the driver loader log now works!
-If the splash screen shuts down saysing it failed to start the driver, please post the log file as an issue on the repo.
+All driver loading is now automated, The splash screen is done, and the driver loader log now works!
+If the splash screen shuts down saying it failed to start the driver, please post the log file as an issue on the repo.
 
 **Note2**: Even though it can dump both x86 & x64 processes, this has to run on x64 Windows.
 
