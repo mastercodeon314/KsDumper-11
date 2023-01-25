@@ -98,6 +98,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TriggerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TriggerForm.Designer.cs">
+      <DependentUpon>TriggerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SplashForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,12 +135,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Trigger.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Trigger.Designer.cs">
+      <DependentUpon>Trigger.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utility\WinApi.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="Utility\MarshalUtility.cs" />
     <Compile Include="Utility\ProcessListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="TriggerForm.resx">
+      <DependentUpon>TriggerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dumper.resx">
       <DependentUpon>Dumper.cs</DependentUpon>
     </EmbeddedResource>
@@ -144,6 +159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SplashForm.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trigger.resx">
+      <DependentUpon>Trigger.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="Driver\KsDumperDriver.sys">
