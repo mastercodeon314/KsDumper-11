@@ -45,7 +45,6 @@
             this.ImageSizeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ImageTypeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.debuggerTrigger = new KsDumper11.Trigger();
-            this.trigger1 = new KsDumper11.Trigger();
             this.groupBox1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.appIcon1)).BeginInit();
@@ -86,46 +85,46 @@
             this.resumeProcessToolStripMenuItem,
             this.killProcessToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(182, 120);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 142);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // dumpMainModuleToolStripMenuItem
             // 
             this.dumpMainModuleToolStripMenuItem.Name = "dumpMainModuleToolStripMenuItem";
-            this.dumpMainModuleToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.dumpMainModuleToolStripMenuItem.Text = "Dump Main Module";
+            this.dumpMainModuleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dumpMainModuleToolStripMenuItem.Text = "Dump Process";
             this.dumpMainModuleToolStripMenuItem.Click += new System.EventHandler(this.dumpMainModuleToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // openInExplorerToolStripMenuItem
             // 
             this.openInExplorerToolStripMenuItem.Name = "openInExplorerToolStripMenuItem";
-            this.openInExplorerToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.openInExplorerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openInExplorerToolStripMenuItem.Text = "Open In Explorer";
             this.openInExplorerToolStripMenuItem.Click += new System.EventHandler(this.openInExplorerToolStripMenuItem_Click);
             // 
             // suspendProcessToolStripMenuItem
             // 
             this.suspendProcessToolStripMenuItem.Name = "suspendProcessToolStripMenuItem";
-            this.suspendProcessToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.suspendProcessToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.suspendProcessToolStripMenuItem.Text = "Suspend process";
             this.suspendProcessToolStripMenuItem.Click += new System.EventHandler(this.suspendProcessToolStripMenuItem_Click);
             // 
             // resumeProcessToolStripMenuItem
             // 
             this.resumeProcessToolStripMenuItem.Name = "resumeProcessToolStripMenuItem";
-            this.resumeProcessToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.resumeProcessToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.resumeProcessToolStripMenuItem.Text = "Resume process";
             this.resumeProcessToolStripMenuItem.Click += new System.EventHandler(this.resumeProcessToolStripMenuItem_Click);
             // 
             // killProcessToolStripMenuItem
             // 
             this.killProcessToolStripMenuItem.Name = "killProcessToolStripMenuItem";
-            this.killProcessToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.killProcessToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.killProcessToolStripMenuItem.Text = "Kill process";
             this.killProcessToolStripMenuItem.Click += new System.EventHandler(this.killProcessToolStripMenuItem_Click);
             // 
@@ -304,18 +303,10 @@
             // debuggerTrigger
             // 
             this.debuggerTrigger.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.debuggerTrigger.Location = new System.Drawing.Point(484, 37);
+            this.debuggerTrigger.Location = new System.Drawing.Point(484, 28);
             this.debuggerTrigger.Name = "debuggerTrigger";
-            this.debuggerTrigger.Size = new System.Drawing.Size(35, 24);
-            this.debuggerTrigger.TabIndex = 14;
-            // 
-            // trigger1
-            // 
-            this.trigger1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.trigger1.Location = new System.Drawing.Point(484, 28);
-            this.trigger1.Name = "trigger1";
-            this.trigger1.Size = new System.Drawing.Size(15, 13);
-            this.trigger1.TabIndex = 15;
+            this.debuggerTrigger.Size = new System.Drawing.Size(15, 13);
+            this.debuggerTrigger.TabIndex = 15;
             // 
             // Dumper
             // 
@@ -323,7 +314,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.ClientSize = new System.Drawing.Size(1009, 746);
-            this.Controls.Add(this.trigger1);
             this.Controls.Add(this.debuggerTrigger);
             this.Controls.Add(this.closeDriverOnExitBox);
             this.Controls.Add(this.hideSystemProcessBtn);
@@ -426,6 +416,5 @@
 		private global::System.Windows.Forms.Button hideSystemProcessBtn;
         private DarkControls.Controls.DarkCheckBox closeDriverOnExitBox;
         private Trigger debuggerTrigger;
-        private Trigger trigger1;
     }
 }
