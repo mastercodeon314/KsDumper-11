@@ -24,11 +24,9 @@ I could not get the main fork of the program to work when being built from sourc
 This one does though.
 https://github.com/morelli690/KDU_kernel_bypass_/blob/master/Bin/kdu.exe
 
-All driver loading is now automated, i plan on putting in a splash screen till the driver loads.
-For now, the client wont open until the driver has been loaded, if it fails, it exits. 
-I tried to build a logger to output kdu's console output to a file, however it writes black always. Known issue
+All driver loading is now automated, The splash sscreen is done, and the driver loader log now works!
+If the splash screen shuts down saysing it failed to start the driver, please post the log file as an issue on the repo.
 
-**Note**: The driver stays loaded until you reboot, so if you close KsDumper11.exe, you can just reopen it !  
 **Note2**: Even though it can dump both x86 & x64 processes, this has to run on x64 Windows.
 
 ## Disclaimer
@@ -39,7 +37,6 @@ If it still fails, run the included ManualLoader.bat in the driver folder and po
 I will be working on making a selector that will get the correct provider for your system, or detect if none are available.
 
 This project has been made available for informational and educational purposes only.
-The driver source is not included because i couldnt ever get it to compile on my system. The source can be found on the original reop. 
 Considering the nature of this project, it is highly recommended to run it in a `Virtual Environment`. I am not responsible for any crash or damage that could happen to your system.
 
 **Important**: This tool makes no attempt at hiding itself. If you target protected games, the anti-cheat might flag this as a cheat and ban you after a while. Use a `Virtual Environment` !
