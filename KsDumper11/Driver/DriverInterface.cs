@@ -133,7 +133,14 @@ namespace KsDumper11.Driver
 
         public void Dispose()
         {
-            WinApi.CloseHandle(driverHandle);
+            try
+            {
+                WinApi.CloseHandle(driverHandle);
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
         }
 
         ~DriverInterface()

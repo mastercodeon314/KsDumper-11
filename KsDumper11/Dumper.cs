@@ -105,6 +105,7 @@ namespace KsDumper11
             this.InitializeComponent();
             closeDriverOnExitBox.Checked = Properties.Settings.Default.closeDriverOnExitSettings;
             this.FormClosing += Dumper_FormClosing;
+            this.Disposed += Dumper_Disposed;
             this.appIcon1.DragForm = this;
             base.FormBorderStyle = FormBorderStyle.None;
             base.Region = Region.FromHrgn(Utils.CreateRoundRectRgn(0, 0, base.Width, base.Height, 10, 10));
@@ -121,6 +122,14 @@ namespace KsDumper11
             this.dumper = new ProcessDumper(this.driver);
 
             this.LoadProcessList();
+        }
+
+        private void Dumper_Disposed(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.closeDriverOnExitSettings)
+            {
+                driver.UnloadDriver();
+            }
         }
 
         private void closeDriverOnExitBox_CheckedChanged(object sender, EventArgs e)
