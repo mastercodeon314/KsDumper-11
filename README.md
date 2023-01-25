@@ -56,4 +56,4 @@ Considering the nature of this project, it is highly recommended to run it in a 
 
 ## Compile Yourself
 - Requires Visual Studio 2022
-- Requires .NET 4.8
+- Requires .NET 4.6.1
