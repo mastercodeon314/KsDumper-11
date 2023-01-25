@@ -33,50 +33,21 @@ namespace KsDumper11
         private void StartDriver()
         {
             string logPath = Environment.CurrentDirectory + "\\driverLoading.log";
-            FileStream outputStream;
-            if (!File.Exists(logPath))
-            {
-                outputStream = File.Create(logPath);
-                UpdateStatus("Created log file...", 25);
-            }
-            else
-            {
-                outputStream = File.OpenWrite(logPath);
-                UpdateStatus("Opened log file...", 25);
-            }
-            StreamWriter wr = new StreamWriter(outputStream);
 
             Thread.Sleep(750);
 
             UpdateStatus("Starting driver...", 50);
 
-            ProcessStartInfo inf = new ProcessStartInfo(Environment.CurrentDirectory + "\\Driver\\kdu.exe", " -prv 1 -map .\\Driver\\KsDumperDriver.sys")
+            string args = " /c " + Environment.CurrentDirectory + "\\Driver\\kdu.exe -prv 1 -map .\\Driver\\KsDumperDriver.sys > " + "\"" + logPath + "\"";
+
+            ProcessStartInfo inf = new ProcessStartInfo("cmd")
             {
+                Arguments = args,
                 CreateNoWindow = true,
                 UseShellExecute = false,
-                //RedirectStandardOutput = true,
-                //RedirectStandardError = true
             };
             Process proc = Process.Start(inf);
-            proc.OutputDataReceived += delegate (object sender, DataReceivedEventArgs e)
-            {
-                if (!string.IsNullOrEmpty(e.Data))
-                {
-                    wr.WriteLine(e.Data);
-                }
-            };
-            proc.ErrorDataReceived += delegate (object sender, DataReceivedEventArgs e)
-            {
-                if (!string.IsNullOrEmpty(e.Data))
-                {
-                    wr.WriteLine(e.Data);
-                }
-            };
             proc.WaitForExit();
-            wr.Flush();
-            wr.Close();
-            outputStream.Close();
-            outputStream.Dispose();
             if (!DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
             {
                 UpdateStatus("Driver failed to start! Exiting in 3s", 0);
