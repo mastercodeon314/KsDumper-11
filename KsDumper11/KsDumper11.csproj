@@ -167,7 +167,7 @@
     <None Include="Driver\KsDumperDriver.sys">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Driver\LoadCapcom.bat">
+    <None Include="Driver\ManualLoader.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">
