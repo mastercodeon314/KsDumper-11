@@ -33,7 +33,7 @@ If the splash screen shuts down saying it failed to start the driver, please pos
 Due to the nature of how KDU works to map the kernel driver, it is unknown if the system you run this on 
 will have a exploitable driver according to kdu providers.
 If you try to boot KsDumper 11 and it fails to start the driver, trying again as administrator.
-If it still fails, run the included ManualLoader.bat in the driver folder and post the results as an issue. 
+If it still fails post the log. There is a manualloader.bat you can try as well to see the output directly. 
 I will be working on making a selector that will get the correct provider for your system, or detect if none are available.
 
 This project has been made available for informational and educational purposes only.
