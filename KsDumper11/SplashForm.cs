@@ -30,8 +30,59 @@ namespace KsDumper11
             }
         }
 
+        public bool IsAfterburnerRunning
+        {
+            get
+            {
+                Process[] procs = Process.GetProcessesByName("MSIAfterburner");
+
+                if (procs != null)
+                {
+                    if (procs.Length > 0)
+                    {
+                        if (procs[0].ProcessName == "MSIAfterburner")
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+        }
+
+
         private void StartDriver()
         {
+            int timeout = 5;
+            int retryCountDown = 5;
+            if (IsAfterburnerRunning)
+            {
+                while (true)
+                {
+                    if (retryCountDown == 0)
+                    {
+                        retryCountDown = timeout;
+                        if (!IsAfterburnerRunning)
+                        {
+                            break;
+                        }
+                    }
+                    UpdateStatus($"Waiting MSI Afterburner to be closed... Retry in {retryCountDown}s", 0);
+                    Thread.Sleep(1000);
+                    retryCountDown -= 1;
+                }
+                retryCountDown = 3;
+
+                while (retryCountDown != 0)
+                {
+
+                    UpdateStatus($"Sleeping {retryCountDown}s to ensure MSI Afterburner driver is unloaded", 0);
+                    Thread.Sleep(1000);
+                    retryCountDown -= 1;
+                }
+            }
+
             string logPath = Environment.CurrentDirectory + "\\driverLoading.log";
 
             Thread.Sleep(750);
@@ -50,9 +101,14 @@ namespace KsDumper11
             proc.WaitForExit();
             if (!DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
             {
-                UpdateStatus("Driver failed to start! Exiting in 3s", 0);
+                retryCountDown = 3;
 
-                Thread.Sleep(3000);
+                while (retryCountDown != 0)
+                {
+                    UpdateStatus($"Driver failed to start! Exiting in {retryCountDown}s", 0);
+                    Thread.Sleep(1000);
+                    retryCountDown -= 1;
+                }
 
                 Environment.Exit(0);
             }
@@ -111,7 +167,7 @@ namespace KsDumper11
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new LoadedDriverDel(LoadedDriver), new object[] {  });
+                this.Invoke(new LoadedDriverDel(LoadedDriver), new object[] { });
             }
             else
             {
