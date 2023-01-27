@@ -121,7 +121,6 @@ namespace KsDumper11
 
         public SplashForm()
         {
-
             InitializeComponent();
 
             this.FormBorderStyle = FormBorderStyle.None;

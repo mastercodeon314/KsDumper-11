@@ -1,6 +1,13 @@
 # KsDumper-11
 https://user-images.githubusercontent.com/78676320/213967527-ba0d435d-9d92-467d-bd9f-4e85f947dfa0.mp4
 
+## Support
+You can join the official KsDumper 11 discord server where I will be managing ongoing issues. 
+I am starting to see multiple people who's system the Rtcore64 exploit fails to work on.
+For those of you who find that ksDumper won't start on their system, please join the server and post your logs in the support channel. 
+Please keep in mind that until others volunteer to help in development of this tool, I am only one person with a finite amount of knowledge. 
+https://discord.gg/6kfWU3Ckya
+
 ## Features
 - Auto dumping of selected exe.
 - Unloading the KsDumper kernel driver is now supported! An option was added to unload on program exit, or system shutdown/restart.
