@@ -297,7 +297,7 @@ namespace KsDumper11
                             Environment.Exit(0);
                         }
                     }
-                    if (providerID == 1 || providerID == 7 || providerID == 29 || providerID == 28)
+                    if (providerID == 1)// || providerID == 7 || providerID == 29 || providerID == 28)
                     {
                         providerID++;
                         continue;
