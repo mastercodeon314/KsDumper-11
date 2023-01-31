@@ -66,5 +66,6 @@ Considering the nature of this project, it is highly recommended to run it in a 
 - https://www.unknowncheats.me/
 
 ## Compile Yourself
-- Requires Visual Studio 2022
+- Requires Visual Studio 2022 (or 2019 for compiling the driver)
 - Requires .NET 4.6.1
+- Window Driver Framework (WDK)
