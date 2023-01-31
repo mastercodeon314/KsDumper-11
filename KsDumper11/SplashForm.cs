@@ -51,9 +51,36 @@ namespace KsDumper11
             }
         }
 
+        List<int> workingProviders = new List<int>();
+
+        string logFolder = Environment.CurrentDirectory + "\\Logs";
+        string workingProvidersPath = Environment.CurrentDirectory + "\\Providers.txt";
+        Random rnd = new Random();
+        void saveProviders()
+        {
+            StringBuilder b = new StringBuilder();
+            for (int i = 0; i < workingProviders.Count; i++)
+            {
+                if (i == workingProviders.Count - 1)
+                {
+                    b.Append(workingProviders[i]);
+                }
+                else
+                {
+                    b.Append(workingProviders[i].ToString() + "|");
+                }
+            }
+            Debugger.Break();
+            File.WriteAllText(workingProvidersPath, b.ToString());
+        }
 
         private void StartDriver()
         {
+            if (!Directory.Exists(logFolder))
+            {
+                Directory.CreateDirectory(logFolder);
+            }
+
             int timeout = 5;
             int retryCountDown = 5;
             if (IsAfterburnerRunning)
@@ -83,11 +110,61 @@ namespace KsDumper11
                 }
             }
 
+            int idx = 0;
+            int providerID = 0;
+
+            if (File.Exists(workingProvidersPath))
+            {
+                UpdateStatus($"Saved providers found, trying each provider until one works...", 50);
+                Thread.Sleep(1000);
+                string provsStr = File.ReadAllText(workingProvidersPath);
+                string[] parts = provsStr.Split('|');
+                foreach (string provider in parts)
+                {
+                    workingProviders.Add(int.Parse(provider));
+                }
+
+                while (!DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
+                {
+                    if (idx == workingProviders.Count)
+                    {
+                        retryCountDown = 3;
+                        while (retryCountDown != 0)
+                        {
+                            UpdateStatus($"Driver failed to start, no saved providers worked! Exiting in {retryCountDown}s", 50);
+                            Thread.Sleep(1000);
+                            retryCountDown -= 1;
+                        }
+
+                        Environment.Exit(0);
+                        break;
+                    }
+
+                    providerID = workingProviders[idx];
+                    tryLoad(providerID);
+
+                    if (!DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
+                    {
+                        UpdateStatus($"Saved Provider: {providerID} failed!", 50);
+                        Thread.Sleep(1000);
+                        idx++;
+                        continue;
+                    }
+                    else
+                    {
+                        UpdateStatus($"Saved Provider: {providerID} worked!", 100);
+                        Thread.Sleep(1000);
+                        LoadedDriver();
+                        return;
+                    }
+                }
+            }
+
             string logPath = Environment.CurrentDirectory + "\\driverLoading.log";
 
             Thread.Sleep(750);
 
-            UpdateStatus("Starting driver...", 50);
+            UpdateStatus("Starting driver with default provider #1", 50);
 
             string args = " /c " + Environment.CurrentDirectory + "\\Driver\\kdu.exe -prv 1 -map .\\Driver\\KsDumperDriver.sys > " + "\"" + logPath + "\"";
 
@@ -99,24 +176,142 @@ namespace KsDumper11
             };
             Process proc = Process.Start(inf);
             proc.WaitForExit();
+
             if (!DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
             {
                 retryCountDown = 3;
 
-                while (retryCountDown != 0)
+                UpdateStatus("Scanning for working providers...", 50);
+                while (!DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
                 {
-                    UpdateStatus($"Driver failed to start! Exiting in {retryCountDown}s", 0);
-                    Thread.Sleep(1000);
-                    retryCountDown -= 1;
+                    if (providerID == 31)
+                    {
+                        if (workingProviders.Count > 0)
+                        {
+                            providerID = workingProviders[rnd.Next(0, workingProviders.Count - 1)];
+                            UpdateStatus("Saving working providers!", 50);
+                            Thread.Sleep(500);
+                            saveProviders();
+
+                            tryLoad(providerID);
+
+                            if (DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
+                            {
+                                LoadedDriver();
+                                return;
+                            }
+                            else
+                            {
+                                retryCountDown = 3;
+                                while (retryCountDown != 0)
+                                {
+                                    UpdateStatus($"No working providers found! Exiting in {retryCountDown}s", 50);
+                                    Thread.Sleep(1000);
+                                    retryCountDown -= 1;
+                                }
+
+                                Environment.Exit(0);
+                            }
+                        }
+                        else
+                        {
+                            retryCountDown = 3;
+                            while (retryCountDown != 0)
+                            {
+                                UpdateStatus($"No working providers found! Exiting in {retryCountDown}s", 50);
+                                Thread.Sleep(1000);
+                                retryCountDown -= 1;
+                            }
+
+                            Environment.Exit(0);
+                        }
+                    }
+                    if (providerID == 1 || providerID == 7 || providerID == 29 || providerID == 28)
+                    {
+                        providerID++;
+                        continue;
+                    }
+
+                    tryLoad(providerID);
+
+                    if (!DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
+                    {
+                        UpdateStatus($"Provider: {providerID} failed!", 50);
+                        Thread.Sleep(1000);
+                        providerID++;
+                        continue;
+                    }
+                    else
+                    {
+                        UpdateStatus($"Provider: {providerID} works", 50);
+                        workingProviders.Add(providerID);
+                        DriverInterface.OpenKsDumperDriver().UnloadDriver();
+                        Thread.Sleep(1000);
+                        providerID++;
+                        continue;
+                    }
                 }
 
-                Environment.Exit(0);
+                if (!DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
+                {
+                    while (retryCountDown != 0)
+                    {
+                        UpdateStatus($"Driver failed to start! Exiting in {retryCountDown}s", 0);
+                        Thread.Sleep(1000);
+                        retryCountDown -= 1;
+                    }
+
+                    Environment.Exit(0);
+                }
             }
 
-            UpdateStatus("Driver Started!...", 100);
+            UpdateStatus("Driver Started!", 100);
             Thread.Sleep(750);
 
             LoadedDriver();
+        }
+
+        void tryLoad(int providerID)
+        {
+            UpdateStatus($"Starting driver with provider: {providerID}", 50);
+            int timeout = 5;
+            int retryCountDown = 5;
+
+            string logPath = logFolder + $"\\driverLoading_ProviderID_{providerID}.log";
+
+            string args = " /c " + Environment.CurrentDirectory + $"\\Driver\\kdu.exe -prv {providerID} -map .\\Driver\\KsDumperDriver.sys > " + "\"" + logPath + "\"";
+
+            ProcessStartInfo inf = new ProcessStartInfo("cmd")
+            {
+                Arguments = args,
+                CreateNoWindow = true,
+                UseShellExecute = false,
+            };
+            Process proc = Process.Start(inf);
+            if (!proc.WaitForExit(10000))
+            {
+                proc.Kill();
+            }
+
+            if (proc.ExitCode == 1)
+            {
+                Thread.Sleep(750);
+            }
+            //if (!DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
+            //{
+            //    retryCountDown = 3;
+
+            //    while (retryCountDown != 0)
+            //    {
+            //        UpdateStatus($"Driver failed to start! Exiting in {retryCountDown}s", 0);
+            //        Thread.Sleep(1000);
+            //        retryCountDown -= 1;
+            //    }
+
+            //    Environment.Exit(0);
+            //}
+
+            //UpdateStatus("Driver Started!...", 100);
         }
 
         public SplashForm()
@@ -132,7 +327,14 @@ namespace KsDumper11
             //StartProgressBar();
             Task.Run(() =>
             {
-                StartDriver();
+                try
+                {
+                    StartDriver();
+                }
+                catch (Exception ex)
+                {
+                    return;
+                }
             });
         }
 

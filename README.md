@@ -1,6 +1,12 @@
 # KsDumper-11
 https://user-images.githubusercontent.com/78676320/213967527-ba0d435d-9d92-467d-bd9f-4e85f947dfa0.mp4
 
+## Whats new v1.2
+- KsDumper will now try and start the driver using the default kdu exploit provider #1 (RTCore64.sys)
+- If the default provider does not work, KsDumper will scan all kdu providers and save each one that works into a list.
+- Anytime kdu loads and it detects a saved providers list, it will try to load the KsDumper driver using each saved provider until one works.
+- This technique should increase the amount of systems that the driver will be able to be loaded on. 
+
 ## Support
 You can join the official KsDumper 11 discord server where I will be managing ongoing issues. 
 I am starting to see multiple people who's system the Rtcore64 exploit fails to work on.
@@ -9,6 +15,7 @@ Please keep in mind that until others volunteer to help in development of this t
 https://discord.gg/6kfWU3Ckya
 
 ## Features
+- Auto detection of working kdu exploit providers.
 - Auto dumping of selected exe.
 - Unloading the KsDumper kernel driver is now supported! An option was added to unload on program exit, or system shutdown/restart.
 - Splash screen for when driver is being loaded

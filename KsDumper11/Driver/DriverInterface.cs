@@ -8,6 +8,10 @@ namespace KsDumper11.Driver
 	// Token: 0x02000014 RID: 20
 	public class DriverInterface
 	{
+		public static DriverInterface OpenKsDumperDriver()
+		{
+			return new DriverInterface("\\\\.\\KsDumper");
+		}
         public static bool IsDriverOpen(string registryPath)
         {
             IntPtr handle = WinApi.CreateFileA(registryPath, FileAccess.ReadWrite, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, (FileAttributes)0, IntPtr.Zero);
