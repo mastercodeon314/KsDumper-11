@@ -80,12 +80,9 @@ namespace KsDumper11
             if (providerID != 31)
             {
                 writeToDisk(scanningPath, providerID.ToString());
-
-                //File.WriteAllText(scanningPath, providerID.ToString());
             }
 
             writeToDisk(workingProvidersPath, b.ToString());
-            //File.WriteAllText(workingProvidersPath, b.ToString());
 
             Thread.Sleep(1000);
         }
@@ -226,18 +223,18 @@ namespace KsDumper11
 
             Thread.Sleep(750);
 
-            //UpdateStatus("Starting driver with default provider #1", 50);
+            UpdateStatus("Starting driver with default provider #1", 50);
 
-            //string args = " /c " + Environment.CurrentDirectory + "\\Driver\\kdu.exe -map .\\Driver\\KsDumperDriver.sys > " + "\"" + logPath + "\"";
+            string args = " /c " + Environment.CurrentDirectory + "\\Driver\\kdu.exe -prv 1 -map .\\Driver\\KsDumperDriver.sys > " + "\"" + logPath + "\"";
 
-            //ProcessStartInfo inf = new ProcessStartInfo("cmd")
-            //{
-            //    Arguments = args,
-            //    CreateNoWindow = true,
-            //    UseShellExecute = false,
-            //};
-            //Process proc = Process.Start(inf);
-            //proc.WaitForExit();
+            ProcessStartInfo inf = new ProcessStartInfo("cmd")
+            {
+                Arguments = args,
+                CreateNoWindow = true,
+                UseShellExecute = false,
+            };
+            Process proc = Process.Start(inf);
+            proc.WaitForExit();
 
             scan(0);
 
