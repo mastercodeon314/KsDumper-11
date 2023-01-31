@@ -14,11 +14,16 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using DarkControls;
 using KsDumper11.Driver;
+using System.Runtime.Remoting.Contexts;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace KsDumper11
 {
     public partial class SplashForm : Form
     {
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool FlushFileBuffers(IntPtr handle);
+
         protected override CreateParams CreateParams
         {
             get
@@ -55,8 +60,9 @@ namespace KsDumper11
 
         string logFolder = Environment.CurrentDirectory + "\\Logs";
         string workingProvidersPath = Environment.CurrentDirectory + "\\Providers.txt";
+        string scanningPath = Environment.CurrentDirectory + "\\Scanning.txt";
         Random rnd = new Random();
-        void saveProviders()
+        void saveProviders(int providerID)
         {
             StringBuilder b = new StringBuilder();
             for (int i = 0; i < workingProviders.Count; i++)
@@ -70,8 +76,43 @@ namespace KsDumper11
                     b.Append(workingProviders[i].ToString() + "|");
                 }
             }
-            Debugger.Break();
-            File.WriteAllText(workingProvidersPath, b.ToString());
+
+            if (providerID != 31)
+            {
+                writeToDisk(scanningPath, providerID.ToString());
+
+                //File.WriteAllText(scanningPath, providerID.ToString());
+            }
+
+            writeToDisk(workingProvidersPath, b.ToString());
+            //File.WriteAllText(workingProvidersPath, b.ToString());
+
+            Thread.Sleep(1000);
+        }
+
+        private void writeToDisk(string path, string text)
+        {
+            if (!File.Exists(path))
+            {
+                FileStream fs = File.Create(path);
+                StreamWriter sw = new StreamWriter(fs);
+                sw.Write(text);
+                sw.Flush();
+                FlushFileBuffers(fs.Handle);
+                sw.Close();
+                sw.Dispose();
+            }
+            else
+            {
+                File.Delete(path);
+                FileStream fs = File.Create(path);
+                StreamWriter sw = new StreamWriter(fs);
+                sw.Write(text);
+                sw.Flush();
+                FlushFileBuffers(fs.Handle);
+                sw.Close();
+                sw.Dispose();
+            }
         }
 
         private void StartDriver()
@@ -112,6 +153,27 @@ namespace KsDumper11
 
             int idx = 0;
             int providerID = 0;
+
+            if (File.Exists(scanningPath))
+            {
+                if (File.Exists(workingProvidersPath))
+                {
+                    string provsStr = File.ReadAllText(workingProvidersPath);
+                    string[] parts = provsStr.Split('|');
+                    foreach (string provider in parts)
+                    {
+                        workingProviders.Add(int.Parse(provider));
+                    }
+                }
+
+                providerID = int.Parse(File.ReadAllText(scanningPath));
+                providerID++;
+                if (scan(providerID))
+                {
+                    File.Delete(scanningPath);
+                    return;
+                }
+            }
 
             if (File.Exists(workingProvidersPath))
             {
@@ -164,18 +226,30 @@ namespace KsDumper11
 
             Thread.Sleep(750);
 
-            UpdateStatus("Starting driver with default provider #1", 50);
+            //UpdateStatus("Starting driver with default provider #1", 50);
 
-            string args = " /c " + Environment.CurrentDirectory + "\\Driver\\kdu.exe -prv 1 -map .\\Driver\\KsDumperDriver.sys > " + "\"" + logPath + "\"";
+            //string args = " /c " + Environment.CurrentDirectory + "\\Driver\\kdu.exe -map .\\Driver\\KsDumperDriver.sys > " + "\"" + logPath + "\"";
 
-            ProcessStartInfo inf = new ProcessStartInfo("cmd")
-            {
-                Arguments = args,
-                CreateNoWindow = true,
-                UseShellExecute = false,
-            };
-            Process proc = Process.Start(inf);
-            proc.WaitForExit();
+            //ProcessStartInfo inf = new ProcessStartInfo("cmd")
+            //{
+            //    Arguments = args,
+            //    CreateNoWindow = true,
+            //    UseShellExecute = false,
+            //};
+            //Process proc = Process.Start(inf);
+            //proc.WaitForExit();
+
+            scan(0);
+
+            UpdateStatus("Driver Started!", 100);
+            Thread.Sleep(750);
+
+            LoadedDriver();
+        }
+
+        bool scan(int providerID)
+        {
+            int retryCountDown = 3;
 
             if (!DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
             {
@@ -191,14 +265,14 @@ namespace KsDumper11
                             providerID = workingProviders[rnd.Next(0, workingProviders.Count - 1)];
                             UpdateStatus("Saving working providers!", 50);
                             Thread.Sleep(500);
-                            saveProviders();
+                            saveProviders(providerID);
 
                             tryLoad(providerID);
 
                             if (DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
                             {
                                 LoadedDriver();
-                                return;
+                                return true;
                             }
                             else
                             {
@@ -231,6 +305,7 @@ namespace KsDumper11
                         providerID++;
                         continue;
                     }
+                    saveProviders(providerID);
 
                     tryLoad(providerID);
 
@@ -265,10 +340,7 @@ namespace KsDumper11
                 }
             }
 
-            UpdateStatus("Driver Started!", 100);
-            Thread.Sleep(750);
-
-            LoadedDriver();
+            return false;
         }
 
         void tryLoad(int providerID)
