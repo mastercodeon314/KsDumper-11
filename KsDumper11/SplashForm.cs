@@ -56,6 +56,9 @@ namespace KsDumper11
             }
         }
 
+        int maxProviders = 31;
+        //int maxProviders = 9;
+
         List<int> workingProviders = new List<int>();
 
         string logFolder = Environment.CurrentDirectory + "\\Logs";
@@ -77,9 +80,10 @@ namespace KsDumper11
                 }
             }
 
-            if (providerID != 31)
+            if (providerID != maxProviders)
             {
                 writeToDisk(scanningPath, providerID.ToString());
+                File.WriteAllText(scanningPath, b.ToString());
             }
 
             writeToDisk(workingProvidersPath, b.ToString());
@@ -156,14 +160,20 @@ namespace KsDumper11
                 if (File.Exists(workingProvidersPath))
                 {
                     string provsStr = File.ReadAllText(workingProvidersPath);
-                    string[] parts = provsStr.Split('|');
-                    foreach (string provider in parts)
+                    if (provsStr != String.Empty && provsStr != null)
                     {
-                        workingProviders.Add(int.Parse(provider));
+                        string[] parts = provsStr.Split('|');
+                        foreach (string provider in parts)
+                        {
+                            workingProviders.Add(int.Parse(provider));
+                        }
                     }
                 }
 
                 providerID = int.Parse(File.ReadAllText(scanningPath));
+
+                // Save the crash providerID to a blacklist.
+
                 providerID++;
                 if (scan(providerID))
                 {
@@ -177,12 +187,15 @@ namespace KsDumper11
                 UpdateStatus($"Saved providers found, trying each provider until one works...", 50);
                 Thread.Sleep(1000);
                 string provsStr = File.ReadAllText(workingProvidersPath);
-                string[] parts = provsStr.Split('|');
-                foreach (string provider in parts)
-                {
-                    workingProviders.Add(int.Parse(provider));
-                }
 
+                if (provsStr != String.Empty && provsStr != null)
+                {
+                    string[] parts = provsStr.Split('|');
+                    foreach (string provider in parts)
+                    {
+                        workingProviders.Add(int.Parse(provider));
+                    }
+                }
                 while (!DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
                 {
                     if (idx == workingProviders.Count)
@@ -221,20 +234,22 @@ namespace KsDumper11
 
             string logPath = Environment.CurrentDirectory + "\\driverLoading.log";
 
-            Thread.Sleep(750);
+            //Thread.Sleep(750);
 
-            UpdateStatus("Starting driver with default provider #1", 50);
+            //{
+            //    UpdateStatus("Starting driver with default provider #1", 50);
 
-            string args = " /c " + Environment.CurrentDirectory + "\\Driver\\kdu.exe -prv 1 -map .\\Driver\\KsDumperDriver.sys > " + "\"" + logPath + "\"";
+            //    string args = " /c " + Environment.CurrentDirectory + "\\Driver\\kdu.exe -prv 1 -map .\\Driver\\KsDumperDriver.sys > " + "\"" + logPath + "\"";
 
-            ProcessStartInfo inf = new ProcessStartInfo("cmd")
-            {
-                Arguments = args,
-                CreateNoWindow = true,
-                UseShellExecute = false,
-            };
-            Process proc = Process.Start(inf);
-            proc.WaitForExit();
+            //    ProcessStartInfo inf = new ProcessStartInfo("cmd")
+            //    {
+            //        Arguments = args,
+            //        CreateNoWindow = true,
+            //        UseShellExecute = false,
+            //    };
+            //    Process proc = Process.Start(inf);
+            //    proc.WaitForExit();
+            //}
 
             scan(0);
 
@@ -255,7 +270,7 @@ namespace KsDumper11
                 UpdateStatus("Scanning for working providers...", 50);
                 while (!DriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
                 {
-                    if (providerID == 31)
+                    if (providerID == maxProviders)
                     {
                         if (workingProviders.Count > 0)
                         {

@@ -748,5 +748,10 @@ namespace KsDumper11
             // Token: 0x040000A8 RID: 168
             public int InheritedFromUniqueProcessId;
         }
+
+        private void trigger1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

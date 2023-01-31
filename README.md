@@ -2,10 +2,10 @@
 https://user-images.githubusercontent.com/78676320/213967527-ba0d435d-9d92-467d-bd9f-4e85f947dfa0.mp4
 
 ## Whats new v1.2
-- KsDumper will now try and start the driver using the default kdu exploit provider #1 (RTCore64.sys)
-- If the default provider does not work, KsDumper will scan all kdu providers and save each one that works into a list.
-- Anytime kdu loads and it detects a saved providers list, it will try to load the KsDumper driver using each saved provider until one works.
-- This technique should increase the amount of systems that the driver will be able to be loaded on. 
++ KsDumper will now try and start the driver using the default kdu exploit provider #1 (RTCore64.sys)
++ If the default provider does not work, KsDumper will scan all kdu providers and save each one that works into a list.
++ Anytime kdu loads and it detects a saved providers list, it will try to load the KsDumper driver using each saved provider until one works.
++ This technique should increase the amount of systems that the driver will be able to be loaded on. 
 
 ## Support
 You can join the official KsDumper 11 discord server where I will be managing ongoing issues. 
@@ -33,10 +33,6 @@ https://discord.gg/6kfWU3Ckya
 ## Usage
 The old way of loading the unsigned ksDumper.sys kernel driver was to use the capcom exploit to map it, this got patched in windows 11.
 This one loads the driver with Kernel Driver Utility, or KDU for short. 
-I could not get the main fork of the program to work when being built from source. 
-
-This one does though.
-https://github.com/morelli690/KDU_kernel_bypass_/blob/master/Bin/kdu.exe
 
 All driver loading is now automated, The splash screen is done, and the driver loader log now works!
 If the splash screen shuts down saying it failed to start the driver, please post the log file as an issue on the repo.
@@ -62,7 +58,6 @@ Considering the nature of this project, it is highly recommended to run it in a 
 ## References
 - https://github.com/EquiFox/KsDumper
 - https://github.com/hfiref0x/KDU
-- https://github.com/morelli690/KDU_kernel_bypass_/blob/master/Bin/kdu.exe
 - https://github.com/not-wlan/drvmap
 - https://github.com/Zer0Mem0ry/KernelBhop
 - https://github.com/NtQuery/Scylla/

@@ -128,7 +128,9 @@
     <None Include="icons8-crossed-axes-100.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="BlankForm.resx" />
+    <EmbeddedResource Include="BlankForm.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
