@@ -44,6 +44,10 @@ If the splash screen shuts down saying it failed to start the driver, please pos
 **Note2**: Even though it can dump both x86 & x64 processes, this has to run on x64 Windows.
 
 ## Disclaimer
+The new kdu provider scanner will sometimes crash windows with a BSOD when a provider goes bad loading the KsDumper driver. 
+In the event windows does crash while ksdumper is scanning for providers, just restart and rerun KsDUmper. 
+It will pickup where it left off scanning and skip the provider that just crashed it. The presence of Scanning.txt is what tells you of KsDumper was in the middle of a provider scan that it has to finish. 
+
 Due to the nature of how KDU works to map the kernel driver, it is unknown if the system you run this on 
 will have a exploitable driver according to kdu providers.
 If you try to boot KsDumper 11 and it fails to start the driver, trying again as administrator.
