@@ -19,7 +19,6 @@ https://github.com/mastercodeon314/KsDumper-11/assets/78676320/56f0a8f5-409c-4d8
 
 ## Support
 You can join the official KsDumper 11 discord server where I will be managing ongoing issues. 
-I am starting to see multiple people who's system the Rtcore64 exploit fails to work on.
 For those of you who find that ksDumper won't start on their system, please join the server and post your logs in the support channel. 
 Please keep in mind that until others volunteer to help in development of this tool, I am only one person with a finite amount of knowledge. 
 https://discord.gg/6kfWU3Ckya
@@ -36,7 +35,7 @@ https://discord.gg/6kfWU3Ckya
 - ^ This can be defeated by stripping pe headers. Once pe headers are stripped, it cant dump.
 - Works on protected system processes & processes with stripped handles (anti-cheats)
 - Works on Windows 11, it doesnt crash anymore!
-![Dev Channel Insider Build Win 11 Ksdumper](https://github.com/mastercodeon314/KsDumper-11/assets/78676320/12b05290-8856-48c6-ae03-90733c8db392)
+![Canary Channel Insider Build Win 11 Ksdumper](https://github.com/mastercodeon314/KsDumper-11/assets/78676320/12b05290-8856-48c6-ae03-90733c8db392)
 
 **Note**: Import table isn't rebuilt.
 
@@ -44,21 +43,19 @@ https://discord.gg/6kfWU3Ckya
 The old way of loading the unsigned ksDumper.sys kernel driver was to use the capcom exploit to map it, this got patched in windows 11.
 This one loads the driver with Kernel Driver Utility, or KDU for short. 
 
-All driver loading is now automated, The splash screen is done, and the driver loader log now works!
-If the splash screen shuts down saying it failed to start the driver, please post the log file as an issue on the repo.
+Loading of the driver is handled by the Provider Selector now. Simply select a provider from the list, click Test Driver, and if it works, then you can click Set Default provider and it will use the selected provider to load the KsDumper driver with. 
 
 **Note2**: Even though it can dump both x86 & x64 processes, this has to run on x64 Windows.
 
 ## Disclaimer
-The new kdu provider scanner will sometimes crash windows with a BSOD when a provider goes bad loading the KsDumper driver. 
-In the event windows does crash while ksdumper is scanning for providers, just restart and rerun KsDUmper. 
-It will pickup where it left off scanning and skip the provider that just crashed it. The presence of Scanning.txt is what tells you of KsDumper was in the middle of a provider scan that it has to finish. 
+The new kdu provider selector can and WILL crash windows if a bad provider is tested. As such, I have implimented functionality to allow KsDumper to be ran again after a crash, and it will mark the last tested provider as non-working. This way, users will be prevented from testing that provider again and less crashes should result from general usage of KsDumper 11.
+Please do beware that it can sometimes crash the OS even still. I do not take any responsibility for any damage that may occur to your system from using this tool.
 
 Due to the nature of how KDU works to map the kernel driver, it is unknown if the system you run this on 
 will have a exploitable driver according to kdu providers.
 If you try to boot KsDumper 11 and it fails to start the driver, trying again as administrator.
-If it still fails post the log. There is a manualloader.bat you can try as well to see the output directly. 
-I will be working on making a selector that will get the correct provider for your system, or detect if none are available.
+If it still fails post the log. There is a manualloader.bat you can try as well to see the output directly.
+You MUST run KsDumper at least once for the kdu.exe file and its dlls to be self extracted for the ManualLoader.bat to work.
 
 This project has been made available for informational and educational purposes only.
 Considering the nature of this project, it is highly recommended to run it in a `Virtual Environment`. I am not responsible for any crash or damage that could happen to your system.
@@ -75,6 +72,6 @@ Considering the nature of this project, it is highly recommended to run it in a 
 - https://www.unknowncheats.me/
 
 ## Compile Yourself
-- Requires Visual Studio 2022 (or 2019 for compiling the driver)
-- Requires .NET 4.6.1
+- Requires Visual Studio 2022 (must use 2019 for compiling the driver, and 2019 wdk)
+- Requires .NET 4.8
 - Window Driver Framework (WDK)
