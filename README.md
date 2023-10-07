@@ -7,6 +7,7 @@ https://user-images.githubusercontent.com/78676320/213967527-ba0d435d-9d92-467d-
 + Testing some Providers may BSOD crash the system, KsDumper now has support for being ran again after a crash and will mark the last checked provider as non-working!
 + Anytime kdu loads and it detects a saved providers list, it will try to load the KsDumper driver using the default provider
 + Providers list and selected default provider are now saved as JSON files!
++ Updated to .NET Framework v4.8
 
 ## Whats new v1.2
 + KsDumper will now try and start the driver using the default kdu exploit provider #1 (RTCore64.sys)
