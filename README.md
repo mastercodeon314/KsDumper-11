@@ -36,7 +36,7 @@ https://discord.gg/6kfWU3Ckya
 - ^ This can be defeated by stripping pe headers. Once pe headers are stripped, it cant dump.
 - Works on protected system processes & processes with stripped handles (anti-cheats)
 - Works on Windows 11, it doesnt crash anymore!
-![Dev Channel Insider Build Win 11 Ksdumper](https://cdn.discordapp.com/attachments/1022996250037076047/1066538037154152548/image.png)
+![Dev Channel Insider Build Win 11 Ksdumper](https://github.com/mastercodeon314/KsDumper-11/assets/78676320/12b05290-8856-48c6-ae03-90733c8db392)
 
 **Note**: Import table isn't rebuilt.
 
