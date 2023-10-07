@@ -11,9 +11,9 @@ namespace DarkControls.Controls
         public MinimizeButton()
         {
             this.ButtonType = DarkControls.Controls.WindowsDefaultTitleBarButton.Type.Minimize;
-            this.ClickColor = System.Drawing.Color.Red;
+            this.ClickColor = System.Drawing.Color.DodgerBlue;
             this.ClickIconColor = System.Drawing.Color.Black;
-            this.HoverColor = System.Drawing.Color.OrangeRed;
+            this.HoverColor = System.Drawing.Color.SkyBlue;
             this.HoverIconColor = System.Drawing.Color.Black;
             this.IconColor = System.Drawing.Color.Black;
             this.IconLineThickness = 2;

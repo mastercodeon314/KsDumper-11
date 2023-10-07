@@ -46,6 +46,7 @@
             this.ImageTypeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.debuggerTrigger = new KsDumper11.Trigger();
             this.trigger1 = new KsDumper11.Trigger();
+            this.providerBtn = new DarkControls.Controls.DarkButton();
             this.groupBox1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.appIcon1)).BeginInit();
@@ -202,7 +203,7 @@
             this.hideSystemProcessBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.hideSystemProcessBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.hideSystemProcessBtn.ForeColor = System.Drawing.Color.Silver;
-            this.hideSystemProcessBtn.Location = new System.Drawing.Point(862, 49);
+            this.hideSystemProcessBtn.Location = new System.Drawing.Point(750, 49);
             this.hideSystemProcessBtn.Name = "hideSystemProcessBtn";
             this.hideSystemProcessBtn.Size = new System.Drawing.Size(137, 23);
             this.hideSystemProcessBtn.TabIndex = 12;
@@ -218,7 +219,7 @@
             this.closeDriverOnExitBox.CheckColor = System.Drawing.Color.CornflowerBlue;
             this.closeDriverOnExitBox.FlatAppearance.BorderSize = 0;
             this.closeDriverOnExitBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.closeDriverOnExitBox.Location = new System.Drawing.Point(723, 49);
+            this.closeDriverOnExitBox.Location = new System.Drawing.Point(611, 49);
             this.closeDriverOnExitBox.Name = "closeDriverOnExitBox";
             this.closeDriverOnExitBox.Size = new System.Drawing.Size(133, 23);
             this.closeDriverOnExitBox.TabIndex = 13;
@@ -230,6 +231,7 @@
             // appIcon1
             // 
             this.appIcon1.AppIconImage = global::KsDumper11.Properties.Resources.icons8_crossed_axes_100;
+            this.appIcon1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.appIcon1.DragForm = this;
             this.appIcon1.Image = ((System.Drawing.Image)(resources.GetObject("appIcon1.Image")));
             this.appIcon1.Location = new System.Drawing.Point(5, 4);
@@ -318,12 +320,26 @@
             this.trigger1.TabIndex = 16;
             this.trigger1.Load += new System.EventHandler(this.trigger1_Load);
             // 
+            // providerBtn
+            // 
+            this.providerBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+            this.providerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.providerBtn.ForeColor = System.Drawing.Color.Silver;
+            this.providerBtn.Location = new System.Drawing.Point(893, 49);
+            this.providerBtn.Name = "providerBtn";
+            this.providerBtn.Size = new System.Drawing.Size(106, 23);
+            this.providerBtn.TabIndex = 17;
+            this.providerBtn.Text = "Provider Selector";
+            this.providerBtn.UseVisualStyleBackColor = true;
+            this.providerBtn.Click += new System.EventHandler(this.providerBtn_Click);
+            // 
             // Dumper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.ClientSize = new System.Drawing.Size(1009, 746);
+            this.Controls.Add(this.providerBtn);
             this.Controls.Add(this.trigger1);
             this.Controls.Add(this.debuggerTrigger);
             this.Controls.Add(this.closeDriverOnExitBox);
@@ -428,5 +444,6 @@
         private DarkControls.Controls.DarkCheckBox closeDriverOnExitBox;
         private Trigger debuggerTrigger;
         private Trigger trigger1;
+        private DarkControls.Controls.DarkButton providerBtn;
     }
 }

@@ -396,8 +396,3 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-/DriverChecker/DriverChecker.csproj
-/PEHeadersTesting
-/DriverChecker
-/DumpTest
-/KsDumper11/SemiWorkingKDU

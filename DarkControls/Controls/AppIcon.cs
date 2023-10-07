@@ -29,7 +29,9 @@ Description("The value used to scale down the icon"),
             set
             {
                 _Scale = value;
-                this.Size = Size.Empty;
+                SizeF sz = calcImgSize();
+                this.Image = ResizeImage(appIconImg, (int)sz.Width, (int)sz.Height);
+                base.Size = new Size((int)sz.Width, (int)sz.Height);
             }
         }
 
@@ -45,9 +47,10 @@ Description("The value used to scale down the icon"),
             }
             set
             {
-                SizeF sz = calcImgSize();
-                this.Image = ResizeImage(appIconImg, (int)sz.Width, (int)sz.Height);
-                base.Size = new Size((int)sz.Width, (int)sz.Height);
+                //SizeF sz = calcImgSize();
+                //this.Image = ResizeImage(appIconImg, (int)sz.Width, (int)sz.Height);
+                //base.Size = new Size((int)sz.Width, (int)sz.Height);
+                base.Size = value;
             }
         }
         private bool drag = false; // determine if we should be moving the form
@@ -75,14 +78,14 @@ Description("The image that will be used for the icon"),
         public AppIcon()
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            //BackColor = Color.Transparent;
+            BackColor = Color.FromArgb(33, 33, 33);
 
             this.MouseDown += AppLogo_MouseDown;
             this.MouseUp += AppLogo_MouseUp;
             this.MouseMove += AppLogo_MouseMove;
             SizeF sz = calcImgSize();
-            this.Image = ResizeImage(appIconImg, (int)sz.Width, (int)sz.Height);
-            this.Size = new Size((int)sz.Width, (int)sz.Height);
+            //this.Image = ResizeImage(appIconImg, (int)sz.Width, (int)sz.Height);
+            //this.Size = new Size((int)sz.Width, (int)sz.Height);
 
             if (this.DesignMode == false)
             {
@@ -102,8 +105,8 @@ Description("The image that will be used for the icon"),
         private void DragForm_Load(object sender, EventArgs e)
         {
             SizeF sz = calcImgSize();
-            this.Image = ResizeImage(appIconImg, (int)sz.Width, (int)sz.Height);
-            this.Size = new Size((int)sz.Width, (int)sz.Height);
+            //this.Image = ResizeImage(appIconImg, (int)sz.Width, (int)sz.Height);
+            //this.Size = new Size((int)sz.Width, (int)sz.Height);
             this.Invalidate();
         }
 
@@ -148,6 +151,8 @@ Description("The image that will be used for the icon"),
             var destRect = new Rectangle(0, 0, width, height);
             var destImage = new Bitmap(width, height);
 
+            destImage.MakeTransparent();
+
             destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
             using (var graphics = Graphics.FromImage(destImage))
@@ -160,6 +165,8 @@ Description("The image that will be used for the icon"),
 
                 using (var wrapMode = new ImageAttributes())
                 {
+                    //Color cl = Color.White;
+                    wrapMode.SetColorKey(Color.FromArgb(230, 230, 230), Color.White, ColorAdjustType.Bitmap);
                     wrapMode.SetWrapMode(WrapMode.TileFlipXY);
                     graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
                 }

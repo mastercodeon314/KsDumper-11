@@ -24,6 +24,7 @@ namespace DarkControls.Controls
         private Pen activeIconColorPen;
         private Brush activeIconColorBrush;
         private Brush activeColorBrush;
+        private Type btnType;
 
         /// <summary>
         /// The type which defines the buttons behaviour.
@@ -34,7 +35,16 @@ namespace DarkControls.Controls
         [Browsable(true)]
         [Category("Appearance")]
         [Description("The type which defines the buttons behaviour.")]
-        public Type ButtonType { get; set; }
+        public Type ButtonType {
+            get
+            {
+                return btnType;
+            }
+            set
+            {
+                btnType = value;
+            }
+        }
 
         /// <summary>
         /// The background color of the button when the mouse is inside the buttons bounds.
@@ -50,7 +60,7 @@ namespace DarkControls.Controls
         /// <summary>
         /// The background color of the button when the button is clicked.
         /// </summary>
-
+        
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Browsable(true)]
@@ -61,7 +71,7 @@ namespace DarkControls.Controls
         /// <summary>
         /// The default color of the icon.
         /// </summary>
-
+        
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Browsable(true)]
@@ -72,7 +82,7 @@ namespace DarkControls.Controls
         /// <summary>
         /// The color of the icon when the mouse is inside the buttons bounds.
         /// </summary>
-
+        
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Browsable(true)]
@@ -83,7 +93,7 @@ namespace DarkControls.Controls
         /// <summary>
         /// The color of the icon when the mouse is inside the buttons bounds.
         /// </summary>
-
+        
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Browsable(true)]
@@ -95,7 +105,7 @@ namespace DarkControls.Controls
         /// <summary>
         /// The color of the icon when the button is clicked.
         /// </summary>
-
+        
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Browsable(true)]
@@ -106,8 +116,8 @@ namespace DarkControls.Controls
         /// <summary>
         /// Property which returns the active background color of the button depending on if the button is clicked or hovered.
         /// </summary>
-        ///
-
+        /// 
+        
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Browsable(true)]
@@ -221,22 +231,7 @@ namespace DarkControls.Controls
         protected override void OnClick(EventArgs e)
         {
             if (ButtonType == Type.Close)
-            {
-                Form frm = this.FindForm();
-                if (frm != null)
-                {
-                    if (frm.AcceptButton != null)
-                    {
-                        frm.DialogResult = DialogResult.OK;
-                        frm.Dispose();
-                    }
-                    else
-                    {
-                        frm.Dispose();
-                    }
-                }
-            }
-
+                this.FindForm()?.Close();
             else if (ButtonType == Type.Maximize)
                 this.FindForm().WindowState = this.FindForm().WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
             else

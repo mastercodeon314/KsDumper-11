@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DarkControls</RootNamespace>
     <AssemblyName>DarkControls</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -83,13 +83,20 @@
     <Compile Include="Controls\DarkCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\DarkListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\DarkSelectFileButton.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\DarkTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\FlatComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\FlatScrollBar.cs" />
+    <Compile Include="Controls\FlatScrollBar1.cs" />
     <Compile Include="Controls\MaximizeButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -104,6 +111,9 @@
     </Compile>
     <Compile Include="Controls\SimpleColorTransforms.cs" />
     <Compile Include="Controls\TransparentLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\VisualStudioTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\WindowsDefaultTitleBarButton.cs">

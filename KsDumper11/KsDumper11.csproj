@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>KsDumper11</RootNamespace>
     <AssemblyName>KsDumper11</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -39,7 +39,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\..\..\..\..\VM Share\KsDumper VM\KsDumper v1.1\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;WIN64</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,7 +49,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>..\..\..\..\..\..\VM Share\KsDumper VM\KsDumper v1.1\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;WIN64</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -85,6 +85,9 @@
     <ApplicationIcon>Default.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -98,36 +101,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProviderSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProviderSelector.Designer.cs">
+      <DependentUpon>ProviderSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StartDriver.cs" />
     <Compile Include="TriggerForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TriggerForm.Designer.cs">
       <DependentUpon>TriggerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SplashForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SplashForm.Designer.cs">
-      <DependentUpon>SplashForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Driver\DriverInterface.cs" />
-    <Compile Include="Driver\Operations.cs" />
     <Compile Include="Dumper.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dumper.Designer.cs">
       <DependentUpon>Dumper.cs</DependentUpon>
     </Compile>
-    <Compile Include="PE\32\PE32File.cs" />
-    <Compile Include="PE\32\PE32Header.cs" />
-    <Compile Include="PE\DOSHeader.cs" />
-    <Compile Include="PE\NativePEStructs.cs" />
-    <Compile Include="PE\64\PE64File.cs" />
-    <Compile Include="PE\64\PE64Header.cs" />
-    <Compile Include="PE\PEFile.cs" />
-    <Compile Include="ProcessDumper.cs" />
-    <Compile Include="PE\PESection.cs" />
-    <Compile Include="ProcessSummary.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -141,12 +133,9 @@
     <Compile Include="Trigger.Designer.cs">
       <DependentUpon>Trigger.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utility\WinApi.cs" />
-    <Compile Include="Utility\Logger.cs" />
-    <Compile Include="Utility\MarshalUtility.cs" />
-    <Compile Include="Utility\ProcessListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <EmbeddedResource Include="ProviderSelector.resx">
+      <DependentUpon>ProviderSelector.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TriggerForm.resx">
       <DependentUpon>TriggerForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -157,19 +146,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="SplashForm.resx">
-      <DependentUpon>SplashForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Trigger.resx">
       <DependentUpon>Trigger.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
-    <None Include="Driver\KsDumperDriver.sys">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Driver\KsDumperDriver.sys" />
     <None Include="Driver\ManualLoader.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -185,21 +170,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.ico" />
-    <Content Include="Driver\drv64.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Driver\kdu.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Driver\Taigei64.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Driver\drv64.dll" />
+    <Content Include="Driver\kdu.exe" />
+    <Content Include="Driver\Taigei64.dll" />
     <None Include="icons8-crossed-axes-100.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DarkControls\DarkControls.csproj">
       <Project>{66c94acb-63c7-42a3-9d83-a3801ced4f1c}</Project>
       <Name>DarkControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DriverInterface\DriverInterface.csproj">
+      <Project>{6f8b2a35-060d-4eb1-a6ba-a3057179304b}</Project>
+      <Name>DriverInterface</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

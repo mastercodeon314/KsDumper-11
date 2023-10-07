@@ -1,6 +1,13 @@
 # KsDumper-11
 https://user-images.githubusercontent.com/78676320/213967527-ba0d435d-9d92-467d-bd9f-4e85f947dfa0.mp4
 
+## Whats new v1.3
++ Updated KDU to KDU V1.3.4! Over 40 different providers are now available!
++ Removed the old auto detection of working providers and replaced it with a new provider selector. Users can now select which provider they want to use to load the driver. As well as test providers to see if they work on your system!
++ Testing some Providers may BSOD crash the system, KsDumper now has support for being ran again after a crash and will mark the last checked provider as non-working!
++ Anytime kdu loads and it detects a saved providers list, it will try to load the KsDumper driver using the default provider
++ Providers list and selected default provider are now saved as JSON files!
+
 ## Whats new v1.2
 + KsDumper will now try and start the driver using the default kdu exploit provider #1 (RTCore64.sys)
 + If the default provider does not work, KsDumper will scan all kdu providers and save each one that works into a list.
@@ -15,7 +22,7 @@ Please keep in mind that until others volunteer to help in development of this t
 https://discord.gg/6kfWU3Ckya
 
 ## Features
-- Auto detection of working kdu exploit providers.
+- Selection of working kdu exploit providers.
 - Auto dumping of selected exe.
 - Unloading the KsDumper kernel driver is now supported! An option was added to unload on program exit, or system shutdown/restart.
 - Splash screen for when driver is being loaded

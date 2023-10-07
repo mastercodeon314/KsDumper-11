@@ -20,6 +20,9 @@ namespace DarkControls.Controls
             this.ForeColor = Color.Silver;
 
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SetStyle(
+  ControlStyles.AllPaintingInWmPaint |
+  ControlStyles.DoubleBuffer, true);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -27,7 +30,7 @@ namespace DarkControls.Controls
             //Debugger.Break();
             if (ScrollBarRenderer.IsSupported)
             {
-                Debugger.Break();
+                //Debugger.Break();
                 // Draw the custom scrollbar
                 ScrollBarRenderer.DrawUpperVerticalTrack(e.Graphics, new Rectangle(this.Right - 18, this.Top, 18, this.Height), ScrollBarState.Normal);
                 ScrollBarRenderer.DrawLowerVerticalTrack(e.Graphics, new Rectangle(this.Right - 18, this.Top, 18, this.Height), ScrollBarState.Normal);

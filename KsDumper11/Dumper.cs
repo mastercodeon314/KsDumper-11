@@ -118,7 +118,7 @@ namespace KsDumper11
             }
             this.processList.HeaderStyle = ColumnHeaderStyle.Clickable;
             this.processList.ColumnWidthChanging += this.processList_ColumnWidthChanging;
-            this.driver = new DriverInterface("\\\\.\\KsDumper");
+            this.driver = new KsDumperDriverInterface("\\\\.\\KsDumper");
             this.dumper = new ProcessDumper(this.driver);
 
             this.LoadProcessList();
@@ -576,7 +576,7 @@ namespace KsDumper11
         private const uint PROCESS_QUERY_INFORMATION = 1024U;
 
         // Token: 0x0400000F RID: 15
-        private readonly DriverInterface driver;
+        private readonly KsDumperDriverInterface driver;
 
         // Token: 0x04000010 RID: 16
         private readonly ProcessDumper dumper;
@@ -752,6 +752,20 @@ namespace KsDumper11
         private void trigger1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void providerBtn_Click(object sender, EventArgs e)
+        {
+            KsDumperDriverInterface drv = KsDumperDriverInterface.OpenKsDumperDriver();
+
+            drv.UnloadDriver();
+            drv.Dispose();
+
+            ProviderSelector prov = new ProviderSelector();
+
+            prov.ShowDialog();
+
+            StartDriver.Start();
         }
     }
 }

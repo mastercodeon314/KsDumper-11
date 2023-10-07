@@ -5,34 +5,30 @@ using KsDumper11.Utility;
 
 namespace KsDumper11.Driver
 {
-	// Token: 0x02000014 RID: 20
-	public class DriverInterface
+	public class KsDumperDriverInterface
 	{
-		public static DriverInterface OpenKsDumperDriver()
+		public static KsDumperDriverInterface OpenKsDumperDriver()
 		{
-			return new DriverInterface("\\\\.\\KsDumper");
+			return new KsDumperDriverInterface("\\\\.\\KsDumper");
 		}
-        public static bool IsDriverOpen(string registryPath)
+        public static bool IsDriverOpen(string driverPath)
         {
-            IntPtr handle = WinApi.CreateFileA(registryPath, FileAccess.ReadWrite, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, (FileAttributes)0, IntPtr.Zero);
+            IntPtr handle = WinApi.CreateFileA(driverPath, FileAccess.ReadWrite, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, (FileAttributes)0, IntPtr.Zero);
             bool result = handle != WinApi.INVALID_HANDLE_VALUE;
             WinApi.CloseHandle(handle);
             return result;
         }
 
-        // Token: 0x060000D9 RID: 217 RVA: 0x00005D59 File Offset: 0x00003F59
-        public DriverInterface(string registryPath)
+        public KsDumperDriverInterface(string registryPath)
 		{
 			this.driverHandle = WinApi.CreateFileA(registryPath, FileAccess.ReadWrite, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, (FileAttributes)0, IntPtr.Zero);
 		}
 
-		// Token: 0x060000DA RID: 218 RVA: 0x00005D80 File Offset: 0x00003F80
 		public bool HasValidHandle()
 		{
 			return this.driverHandle != WinApi.INVALID_HANDLE_VALUE;
 		}
 
-		// Token: 0x060000DB RID: 219 RVA: 0x00005DA4 File Offset: 0x00003FA4
 		public bool GetProcessSummaryList(out ProcessSummary[] result)
 		{
 			result = new ProcessSummary[0];
@@ -77,7 +73,6 @@ namespace KsDumper11.Driver
 			return false;
 		}
 
-		// Token: 0x060000DC RID: 220 RVA: 0x00005EF4 File Offset: 0x000040F4
 		private int GetProcessListRequiredBufferSize()
 		{
 			IntPtr operationPointer = MarshalUtility.AllocEmptyStruct<Operations.KERNEL_PROCESS_LIST_OPERATION>();
@@ -95,7 +90,6 @@ namespace KsDumper11.Driver
 			return 0;
 		}
 
-		// Token: 0x060000DD RID: 221 RVA: 0x00005F68 File Offset: 0x00004168
 		public bool CopyVirtualMemory(int targetProcessId, IntPtr targetAddress, IntPtr bufferAddress, int bufferSize)
 		{
 			bool flag = this.driverHandle != WinApi.INVALID_HANDLE_VALUE;
@@ -132,7 +126,6 @@ namespace KsDumper11.Driver
             return false;
         }
 
-        // Token: 0x04000075 RID: 117
         private readonly IntPtr driverHandle;
 
         public void Dispose()
@@ -147,7 +140,7 @@ namespace KsDumper11.Driver
             }
         }
 
-        ~DriverInterface()
+        ~KsDumperDriverInterface()
         {
 			try
 			{
