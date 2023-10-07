@@ -1,5 +1,5 @@
 # KsDumper-11
-https://user-images.githubusercontent.com/78676320/213967527-ba0d435d-9d92-467d-bd9f-4e85f947dfa0.mp4
+https://github.com/mastercodeon314/KsDumper-11/assets/78676320/56f0a8f5-409c-4d89-8a07-989e98994745
 
 ## Whats new v1.3
 + Updated KDU to KDU V1.3.4! Over 40 different providers are now available!
@@ -8,6 +8,8 @@ https://user-images.githubusercontent.com/78676320/213967527-ba0d435d-9d92-467d-
 + Anytime kdu loads and it detects a saved providers list, it will try to load the KsDumper driver using the default provider
 + Providers list and selected default provider are now saved as JSON files!
 + Updated to .NET Framework v4.8
+
+![KsDumper v1.3 Provider Selector window](https://github.com/mastercodeon314/KsDumper-11/assets/78676320/c683b753-774b-49f0-81ca-76ed2f4dd09b)
 
 ## Whats new v1.2
 + KsDumper will now try and start the driver using the default kdu exploit provider #1 (RTCore64.sys)
