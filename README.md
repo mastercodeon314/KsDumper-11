@@ -66,7 +66,7 @@ Considering the nature of this project, it is highly recommended to run it in a 
 **Important**: This tool makes no attempt at hiding itself. If you target protected games, the anti-cheat might flag this as a cheat and ban you after a while. Use a `Virtual Environment` !
 
 ## Donation links
-Anything is super helpful! Anything donated helps me keep developing thius program and others!
+Anything is super helpful! Anything donated helps me keep developing this program and others!
 - https://www.paypal.com/paypalme/lifeline42
 - https://cash.app/$Mastercodeon3142
 
