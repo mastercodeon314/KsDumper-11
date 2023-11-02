@@ -1,6 +1,9 @@
 # KsDumper-11
 https://github.com/mastercodeon314/KsDumper-11/assets/78676320/56f0a8f5-409c-4d89-8a07-989e98994745
 
+## Whats new v1.3.1
++ Updated KDU to v1.4.0! Provider count is now 44
+
 ## Whats new v1.3
 + Updated KDU to KDU V1.3.4! Over 40 different providers are now available!
 + Removed the old auto detection of working providers and replaced it with a new provider selector. Users can now select which provider they want to use to load the driver. As well as test providers to see if they work on your system!
