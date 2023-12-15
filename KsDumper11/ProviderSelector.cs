@@ -47,8 +47,14 @@ namespace KsDumper11
             wrapper = new KduWrapper(KduSelfExtract.KduPath);
             wrapper.DriverLoaded += Wrapper_DriverLoaded;
             wrapper.ProvidersLoaded += Wrapper_ProvidersLoaded;
+            //wrapper.IsDirtyChanged += Wrapper_IsDirtyChanged;
 
             wrapper.LoadProviders();
+        }
+
+        private void Wrapper_IsDirtyChanged(object sender, EventArgs e)
+        {
+            
         }
 
         private void Wrapper_ProvidersLoaded(object sender, EventArgs e)
@@ -72,7 +78,7 @@ namespace KsDumper11
             }
 
             if (wrapper.DefaultProvider != -1)
-            { 
+            {
                 providerList.SelectedIndices.Add(wrapper.DefaultProvider);
             }
             else
@@ -95,6 +101,37 @@ namespace KsDumper11
 
                 ListViewItem item = providerList.Items[idx];
 
+                for (int i = 0; i < wrapper.providers.Count; i++)
+                {
+                    string non_W = "[NOT WORKING] ";
+                    string W_ = "[WORKING] ";
+
+                    if (wrapper.providers[i].ProviderName == item.SubItems[1].Text)
+                    {
+                        if (res)
+                        {
+                            wrapper.providers[i].ProviderName = W_ + wrapper.providers[i].ProviderName;
+
+                            if (wrapper.IsDirty == false)
+                            {
+                                wrapper.IsDirty = true;
+                            }
+                        }
+                        else
+                        {
+                            wrapper.providers[i].ProviderName = non_W + wrapper.providers[i].ProviderName;
+
+                            if (wrapper.IsDirty == false)
+                            {
+                                wrapper.IsDirty = true;
+                            }
+                        }
+
+                        
+                        break;
+                    }
+                }
+                this.wipeSettingsBtn.Enabled = wrapper.IsDirty;
                 if (res)
                 {
                     driverLoadedLbl.ForeColor = Color.Green;
@@ -147,15 +184,14 @@ namespace KsDumper11
                 if (p.ProviderName.Contains("[NOT WORKING]") || p.ProviderName.Contains("[WORKING]"))
                 {
                     testProviderBtn.Enabled = false;
-                    
+
                 }
                 else
                 {
                     testProviderBtn.Enabled = true;
-                    
                 }
 
-                if (p.ProviderName.Contains("[NOT WORKING]") )
+                if (p.ProviderName.Contains("[NOT WORKING]"))
                 {
                     setDefaultProviderBtn.Enabled = false;
                 }
@@ -226,6 +262,27 @@ namespace KsDumper11
 
                 this.Close();
             }
+        }
+
+        private void wipeSettingsBtn_Click(object sender, EventArgs e)
+        {
+            wrapper.ResetProviders();
+
+            providerList.Items.Clear();
+
+            Wrapper_ProvidersLoaded(sender, e);
+
+            this.wipeSettingsBtn.Enabled = false;
+        }
+
+        private void ProviderSelector_Load(object sender, EventArgs e)
+        {
+            this.wipeSettingsBtn.Enabled = wrapper.IsDirty;
+        }
+
+        private void closeBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
         }
     }
 }

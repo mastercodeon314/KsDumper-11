@@ -33,7 +33,28 @@ namespace KsDumper11
         private KduProviderSettings kduSettingsJson;
 
         public List<KduProvider> providers = new List<KduProvider>();
-        CrashMon crashMon;
+
+        private bool _IsDirty = false;
+
+        public event EventHandler IsDirtyChanged;
+
+        public bool IsDirty
+        {
+            get
+            {
+                return _IsDirty;
+            }
+            set
+            {
+                _IsDirty = value;
+                //if (IsDirtyChanged != null)
+                //{
+                //    IsDirtyChanged(_IsDirty, EventArgs.Empty);
+                //}
+            }
+        }
+
+        //CrashMon crashMon;
 
         public int DefaultProvider
         {
@@ -46,7 +67,7 @@ namespace KsDumper11
         public KduWrapper(string kduPath)
         {
             KduPath = kduPath;
-            crashMon = new CrashMon();
+            //crashMon = new CrashMon();
 
             kduSettingsJson = new KduProviderSettings();
 
@@ -58,6 +79,37 @@ namespace KsDumper11
             kduSettingsJson.DefaultProvider = providerID;
 
             SaveProviders();
+        }
+
+        public void ResetProviders()
+        {
+
+            for (int i = 0; i < providers.Count; i++)
+            {
+                string non_W = "[NOT WORKING] ";
+                string W_ = "[WORKING] ";
+                providers[i].ProviderName = providers[i].ProviderName.Replace(non_W, "").Replace(W_, "");
+            }
+
+            kduSettingsJson.DefaultProvider = -1;
+
+            IsDirty = false;
+
+            SaveProviders();
+
+            //foreach (KduProvider prov in providers)
+            //{
+            //    string non_W = "[NOT WORKING] ";
+            //    string W_ = "[WORKING] ";
+
+            //    prov.ProviderName = prov.ProviderName.Replace(non_W, "").Replace(W_, "");
+            //}
+
+            //kduSettingsJson.DefaultProvider = -1;
+
+            //IsDirty = false;
+
+            //SaveProviders();
         }
 
         private void Application_ThreadExit(object sender, EventArgs e)
@@ -74,22 +126,36 @@ namespace KsDumper11
             if (!File.Exists(KduSelfExtract.AssemblyDirectory + @"\\Providers.json"))
             {
                 populateProviders();
+
+                IsDirty = false;
             }
             else
             {
                 kduSettingsJson = JsonConvert.DeserializeObject<KduProviderSettings>(File.ReadAllText(KduSelfExtract.AssemblyDirectory + @"\\Providers.json"));
                 providers = kduSettingsJson.Providers;
 
-                if (crashMon.CheckingProvider != -1)
+                bool foundADirty = false;
+                foreach (KduProvider provider in providers)
                 {
-                    //if (KsDumper11.BSOD.JustHappened())
+                    if (provider.IsNonWorking == true || provider.IsWorking == true)
                     {
-                        providers[crashMon.CheckingProvider].ProviderName = "[NOT WORKING] " + providers[crashMon.CheckingProvider].ProviderName;
-                        SaveProviders();
-
-                        crashMon.CheckingProvider = -1;
+                        foundADirty = true;
+                        break;
                     }
                 }
+
+                IsDirty = foundADirty;
+
+                //if (crashMon.CheckingProvider != -1)
+                //{
+                //    //if (KsDumper11.BSOD.JustHappened())
+                //    {
+                //        providers[crashMon.CheckingProvider].ProviderName = "[NOT WORKING] " + providers[crashMon.CheckingProvider].ProviderName;
+                //        SaveProviders();
+
+                //        crashMon.CheckingProvider = -1;
+                //    }
+                //}
 
                 FireProvidersLoaded();
             }
@@ -210,7 +276,7 @@ namespace KsDumper11
 
         private void updateProvider(bool res, int idx)
         {
-            crashMon.CheckingProvider = -1;
+            //crashMon.CheckingProvider = -1;
 
             KduProvider p = providers[idx];
 
@@ -222,10 +288,14 @@ namespace KsDumper11
                 ksDriver.Dispose();
 
                 providers[idx].ProviderName = "[WORKING] " + providers[idx].ProviderName;
+
+                IsDirty = true;
             }
             else
             {
                 providers[idx].ProviderName = "[NOT WORKING] " + providers[idx].ProviderName;
+
+                IsDirty = true;
             }
 
             SaveProviders();
@@ -303,7 +373,7 @@ namespace KsDumper11
                 return;
             }
 
-            crashMon.CheckingProvider = providerID;
+            //crashMon.CheckingProvider = providerID;
 
             Task.Run(() =>
             {
@@ -351,7 +421,7 @@ namespace KsDumper11
                 }
                 catch { }
             }
-            
+
 
             ProcessStartInfo inf = new ProcessStartInfo("cmd.exe")
             {

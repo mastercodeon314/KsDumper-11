@@ -34,16 +34,34 @@ namespace KsDumper11
 				{
 					KduWrapper wr = new KduWrapper(KduSelfExtract.AssemblyDirectory + @"\Driver\kdu.exe");
 					wr.LoadProviders();
-					wr.Start();
 
-					if (KsDumperDriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
+					if (wr.DefaultProvider != -1)
 					{
-						Application.Run(new Dumper());
+						wr.Start();
+
+						if (KsDumperDriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
+						{
+							Application.Run(new Dumper());
+						}
+						else
+						{
+							Environment.Exit(0);
+						}
 					}
 					else
 					{
-						Environment.Exit(0);
-					}
+                        // Run the selector here to populate the providers and set a default provider. 
+                        Application.Run(new ProviderSelector());
+
+						if (KsDumperDriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
+						{
+							Application.Run(new Dumper());
+						}
+						else
+						{
+							Environment.Exit(0);
+						}
+                    }
                 }
             }
 			else

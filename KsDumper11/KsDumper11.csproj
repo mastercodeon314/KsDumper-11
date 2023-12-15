@@ -49,7 +49,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\VM Share\KsDumper VM\KsDumper v1.1\</OutputPath>
     <DefineConstants>TRACE;WIN64</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -114,6 +114,12 @@
     <Compile Include="TriggerForm.Designer.cs">
       <DependentUpon>TriggerForm.cs</DependentUpon>
     </Compile>
+    <None Include="SplashForm.cs">
+      <SubType>Form</SubType>
+    </None>
+    <None Include="SplashForm.Designer.cs">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </None>
     <Compile Include="Dumper.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,14 +152,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="SplashForm.resx">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </None>
     <EmbeddedResource Include="Trigger.resx">
       <DependentUpon>Trigger.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="Driver\KsDumperDriver.sys" />
-    <None Include="Driver\ManualLoader.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Driver\ManualLoader.bat" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

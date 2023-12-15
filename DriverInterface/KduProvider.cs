@@ -31,6 +31,14 @@ namespace KsDumper11
             }
         }
 
+        public bool IsWorking
+        {
+            get
+            {
+                return this.ProviderName.Contains("WORKING");
+            }
+        }
+
 
         public KduProvider()
         {
