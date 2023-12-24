@@ -1,6 +1,10 @@
 # KsDumper-11
 https://github.com/mastercodeon314/KsDumper-11/assets/78676320/56f0a8f5-409c-4d89-8a07-989e98994745
 
+## Whats new v1.3.3
++ Updated KDU to v1.4.1
+	New providers were added, see KDU patch notes on latest release.
+
 ## Whats new v1.3.2
 + Provider selction window now has a button to reset or wipe provider settings.
 	This means that all the providers will be reset to needing to be tested, and the default provider will be reset.
