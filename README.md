@@ -6,6 +6,7 @@ https://github.com/mastercodeon314/KsDumper-11/assets/78676320/9452970c-27cf-44d
 	Randomized MainWindow Title, most Control Titles, and the exe file name during runtime.
 	The process name is reverted to KsDumper11.exe upon program closing.
 	Enable Anti Anti Debugging Tools Detection check box setting added
+	This feature was added in hopes to make KsDumper 11 more stealthy when trying to dump programs that have more rudimentary Anti Debugging techniques implemented.
 + Lots of source code cleanup
 + Fixed Easter Egg window that would not close upon clicking of the close button
 + Changed all labels in every form to be manually drawn to get around label text being changed when Anti Anti Debugging Tools Detection feature is enabled
