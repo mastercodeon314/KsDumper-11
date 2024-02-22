@@ -36,7 +36,7 @@ namespace KsDumper11
 
             if (!triggerFrm.Visible)
             {
-                triggerFrm.ShowDialog(this.ParentForm);
+                triggerFrm.ShowDialog();
             }
         }
     }

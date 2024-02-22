@@ -36,7 +36,7 @@ namespace KsDumper11
 
         private bool _IsDirty = false;
 
-        public event EventHandler IsDirtyChanged;
+        //public event EventHandler IsDirtyChanged;
 
         public bool IsDirty
         {
@@ -70,8 +70,6 @@ namespace KsDumper11
             //crashMon = new CrashMon();
 
             kduSettingsJson = new KduProviderSettings();
-
-            Application.ThreadExit += Application_ThreadExit;
         }
 
         public void SetDefaultProvider(int providerID)
@@ -96,29 +94,6 @@ namespace KsDumper11
             IsDirty = false;
 
             SaveProviders();
-
-            //foreach (KduProvider prov in providers)
-            //{
-            //    string non_W = "[NOT WORKING] ";
-            //    string W_ = "[WORKING] ";
-
-            //    prov.ProviderName = prov.ProviderName.Replace(non_W, "").Replace(W_, "");
-            //}
-
-            //kduSettingsJson.DefaultProvider = -1;
-
-            //IsDirty = false;
-
-            //SaveProviders();
-        }
-
-        private void Application_ThreadExit(object sender, EventArgs e)
-        {
-            // Create a setting for the user to determine if they want to unload the driver upon exit of KsDumper 11
-            //if (KsDumperDriverInterface.IsDriverOpen("\\\\.\\KsDumper"))
-            //{
-            //    KsDumperDriverInterface.OpenKsDumperDriver().UnloadDriver();
-            //}
         }
 
         public void LoadProviders()
@@ -362,7 +337,7 @@ namespace KsDumper11
             }
             else
             {
-                // alert the user to the fact they probaly need to clear the settings jsons
+                // alert the user to the fact they probably need to clear the settings jsons
             }
         }
 

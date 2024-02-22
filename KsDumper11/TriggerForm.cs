@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using DarkControls;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace KsDumper11
 {
@@ -28,27 +29,19 @@ namespace KsDumper11
             }
         }
 
+        JsonSettingsManager settingsManager;
+        LabelDrawer labelDrawer;
+
         public TriggerForm()
         {
-
             InitializeComponent();
-            //this.AcceptButton = acceptBtn;
+
+            settingsManager = new JsonSettingsManager();
+
             this.appIcon1.DragForm = this;
-            this.FormClosing += TriggerForm_FormClosing;
-            this.Shown += TriggerForm_Shown;
             this.FormBorderStyle = FormBorderStyle.None;
             this.Region = Region.FromHrgn(Utils.CreateRoundRectRgn(0, 0, Width, Height, 10, 10));
             this.closeBtn.Region = Region.FromHrgn(Utils.CreateRoundRectRgn(0, 0, closeBtn.Width, closeBtn.Height, 10, 10));
-        }
-
-        private void TriggerForm_Shown(object sender, EventArgs e)
-        {
-            //Debugger.Break();
-        }
-
-        private void TriggerForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            this.DialogResult = DialogResult.OK;
         }
 
         protected override void WndProc(ref Message m)
@@ -56,6 +49,30 @@ namespace KsDumper11
             base.WndProc(ref m);
             if (m.Msg == Utils.WM_NCHITTEST)
                 m.Result = (IntPtr)(Utils.HT_CAPTION);
+        }
+
+        private void closeBtn_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void TriggerForm_Load(object sender, EventArgs e)
+        {
+            if (settingsManager.JsonSettings.enableAntiAntiDebuggerTools)
+            {
+                labelDrawer = new LabelDrawer(this);
+
+                SnifferBypass.SelfTitle(this.Handle);
+
+                foreach (Control ctrl in this.Controls)
+                {
+                    if (ctrl is System.Windows.Forms.TextBox) continue;
+                    SnifferBypass.SelfTitle(ctrl.Handle);
+                }
+
+                this.Text = SnifferBypass.GenerateRandomString(this.Text.Length);
+            }
         }
     }
 }

@@ -101,12 +101,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JsonSettings.cs" />
+    <Compile Include="JsonSettingsManager.cs" />
+    <Compile Include="LabelDrawer.cs" />
     <Compile Include="ProviderSelector.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ProviderSelector.Designer.cs">
       <DependentUpon>ProviderSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="SnifferBypass.cs" />
     <Compile Include="StartDriver.cs" />
     <Compile Include="TriggerForm.cs">
       <SubType>Form</SubType>
@@ -114,17 +118,11 @@
     <Compile Include="TriggerForm.Designer.cs">
       <DependentUpon>TriggerForm.cs</DependentUpon>
     </Compile>
-    <None Include="SplashForm.cs">
-      <SubType>Form</SubType>
-    </None>
-    <None Include="SplashForm.Designer.cs">
-      <DependentUpon>SplashForm.cs</DependentUpon>
-    </None>
-    <Compile Include="Dumper.cs">
+    <Compile Include="DumperForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dumper.Designer.cs">
-      <DependentUpon>Dumper.cs</DependentUpon>
+    <Compile Include="DumperForm.Designer.cs">
+      <DependentUpon>DumperForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -145,16 +143,13 @@
     <EmbeddedResource Include="TriggerForm.resx">
       <DependentUpon>TriggerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dumper.resx">
-      <DependentUpon>Dumper.cs</DependentUpon>
+    <EmbeddedResource Include="DumperForm.resx">
+      <DependentUpon>DumperForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="SplashForm.resx">
-      <DependentUpon>SplashForm.cs</DependentUpon>
-    </None>
     <EmbeddedResource Include="Trigger.resx">
       <DependentUpon>Trigger.cs</DependentUpon>
     </EmbeddedResource>
@@ -171,9 +166,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.ico" />

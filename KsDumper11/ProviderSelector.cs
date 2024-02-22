@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace KsDumper11
 {
@@ -31,10 +32,14 @@ namespace KsDumper11
 
         KduWrapper wrapper;
 
+        JsonSettingsManager settingsManager;
+        LabelDrawer labelDrawer;
+
         public ProviderSelector()
         {
-
             InitializeComponent();
+
+            settingsManager = new JsonSettingsManager();
 
             this.FormBorderStyle = FormBorderStyle.None;
             this.Region = Region.FromHrgn(Utils.CreateRoundRectRgn(0, 0, Width, Height, 10, 10));
@@ -50,6 +55,19 @@ namespace KsDumper11
             //wrapper.IsDirtyChanged += Wrapper_IsDirtyChanged;
 
             wrapper.LoadProviders();
+        }
+
+        private void setdriverLoadedLblVisible(bool visible)
+        {
+            for (int i = 0; i < labelDrawer.labelInfos.Length; i++)
+            {
+                if (labelDrawer.labelInfos[i].Name == "driverLoadedLbl")
+                {
+                    labelDrawer.labelInfos[i].Visible = visible;
+                }
+            }
+
+            this.Invalidate();
         }
 
         private void Wrapper_IsDirtyChanged(object sender, EventArgs e)
@@ -161,7 +179,14 @@ namespace KsDumper11
                     item.ForeColor = Color.Red;
                 }
 
-                driverLoadedLbl.Visible = true;
+                if (settingsManager.JsonSettings.enableAntiAntiDebuggerTools)
+                {
+                    setdriverLoadedLblVisible(true);
+                }
+                else
+                {
+                    driverLoadedLbl.Visible = true;
+                }
                 driverLoadedLblTimer.Start();
             }
         }
@@ -242,7 +267,16 @@ namespace KsDumper11
         private void driverLoadedLblTimer_Tick(object sender, EventArgs e)
         {
             testProviderBtn.Enabled = true;
-            driverLoadedLbl.Visible = false;
+
+            if (settingsManager.JsonSettings.enableAntiAntiDebuggerTools)
+            {
+                setdriverLoadedLblVisible(false);
+            }
+            else
+            {
+                driverLoadedLbl.Visible = false;
+            }
+                
             driverLoadedLblTimer.Stop();
         }
 
@@ -259,6 +293,8 @@ namespace KsDumper11
                 defaultProviderIDBox.Text = wrapper.DefaultProvider.ToString();
 
                 wrapper.Start();
+
+                Program.ProviderIsClosing = true;
 
                 this.Close();
             }
@@ -278,6 +314,22 @@ namespace KsDumper11
         private void ProviderSelector_Load(object sender, EventArgs e)
         {
             this.wipeSettingsBtn.Enabled = wrapper.IsDirty;
+
+            if (settingsManager.JsonSettings.enableAntiAntiDebuggerTools)
+            {
+                labelDrawer = new LabelDrawer(this);
+                setdriverLoadedLblVisible(false);
+
+                SnifferBypass.SelfTitle(this.Handle);
+
+                foreach (Control ctrl in this.Controls)
+                {
+                    if (ctrl is System.Windows.Forms.TextBox) continue;
+                    SnifferBypass.SelfTitle(ctrl.Handle);
+                }
+
+                this.Text = SnifferBypass.GenerateRandomString(this.Text.Length);
+            }
         }
 
         private void closeBtn_Click(object sender, EventArgs e)

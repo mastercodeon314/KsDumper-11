@@ -1,5 +1,15 @@
 # KsDumper-11
-https://github.com/mastercodeon314/KsDumper-11/assets/78676320/56f0a8f5-409c-4d89-8a07-989e98994745
+https://github.com/mastercodeon314/KsDumper-11/assets/78676320/9452970c-27cf-44df-b091-0d18a07937e5
+
+## Whats new v1.3.4
++ Added new feature Anti Anti Debugging Tools Detection
+	Randomized MainWindow Title, most Control Titles, and the exe file name during runtime.
+	The process name is reverted to KsDumper11.exe upon program closing.
+	Enable Anti Anti Debugging Tools Detection check box setting added
++ Lots of source code cleanup
++ Fixed Easter Egg window that would not close upon clicking of the close button
++ Changed all labels in every form to be manually drawn to get around label text being changed when Anti Anti Debugging Tools Detection feature is enabled
++ Migrated from Application Settings to custom Settings.json for saving and loading of settings.
 
 ## Whats new v1.3.3
 + Updated KDU to v1.4.1

@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TriggerForm));
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.acceptBtn = new System.Windows.Forms.Button();
             this.appIcon1 = new DarkControls.Controls.AppIcon();
             this.transparentLabel1 = new DarkControls.Controls.TransparentLabel();
             this.closeBtn = new DarkControls.Controls.WindowsDefaultTitleBarButton();
@@ -49,19 +48,10 @@
             this.textBox1.TabIndex = 10;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
-            // acceptBtn
-            // 
-            this.acceptBtn.Location = new System.Drawing.Point(295, 13);
-            this.acceptBtn.Name = "acceptBtn";
-            this.acceptBtn.Size = new System.Drawing.Size(75, 23);
-            this.acceptBtn.TabIndex = 11;
-            this.acceptBtn.Text = "OK";
-            this.acceptBtn.UseVisualStyleBackColor = true;
-            this.acceptBtn.Visible = false;
-            // 
             // appIcon1
             // 
             this.appIcon1.AppIconImage = ((System.Drawing.Image)(resources.GetObject("appIcon1.AppIconImage")));
+            this.appIcon1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.appIcon1.DragForm = null;
             this.appIcon1.Image = ((System.Drawing.Image)(resources.GetObject("appIcon1.Image")));
             this.appIcon1.Location = new System.Drawing.Point(0, 1);
@@ -95,6 +85,7 @@
             this.closeBtn.TabIndex = 7;
             this.closeBtn.Text = "windowsDefaultTitleBarButton1";
             this.closeBtn.UseVisualStyleBackColor = true;
+            this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
             // 
             // TriggerForm
             // 
@@ -103,7 +94,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.ClientSize = new System.Drawing.Size(429, 198);
-            this.Controls.Add(this.acceptBtn);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.appIcon1);
             this.Controls.Add(this.transparentLabel1);
@@ -113,7 +103,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "TriggerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Basic File Box";
+            this.Load += new System.EventHandler(this.TriggerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.appIcon1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -125,7 +115,6 @@
         private DarkControls.Controls.TransparentLabel transparentLabel1;
         private DarkControls.Controls.AppIcon appIcon1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button acceptBtn;
     }
 }
 
