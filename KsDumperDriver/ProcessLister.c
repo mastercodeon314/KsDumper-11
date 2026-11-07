@@ -154,3 +154,110 @@ NTSTATUS GetProcessList(PVOID listedProcessBuffer, INT32 bufferSize, PINT32 requ
 		return STATUS_SUCCESS;
 	}
 }
+
+#define MAX_MODULES 1024
+
+NTSTATUS GetModuleList(INT32 targetProcessId, PVOID moduleBuffer, INT32 bufferSize, PINT32 requiredBufferSize, PINT32 moduleCount)
+{
+	*moduleCount = 0;
+	PEPROCESS targetProcess;
+	KAPC_STATE state;
+	int count = 0;
+
+	if (!NT_SUCCESS(PsLookupProcessByProcessId((HANDLE)(ULONG_PTR)targetProcessId, &targetProcess)))
+	{
+		return STATUS_NOT_FOUND;
+	}
+
+	PMODULE_SUMMARY kernelBuffer = (PMODULE_SUMMARY)ExAllocatePool(NonPagedPool, MAX_MODULES * sizeof(MODULE_SUMMARY));
+
+	if (!kernelBuffer)
+	{
+		ObDereferenceObject(targetProcess);
+		return STATUS_INSUFFICIENT_RESOURCES;
+	}
+
+	RtlZeroMemory(kernelBuffer, MAX_MODULES * sizeof(MODULE_SUMMARY));
+
+	__try
+	{
+		KeStackAttachProcess(targetProcess, &state);
+
+		__try
+		{
+			PPEB64 peb = (PPEB64)PsGetProcessPeb(targetProcess);
+
+			if (peb && SanitizeUserPointer(peb, sizeof(PEB64)) &&
+				peb->Ldr && SanitizeUserPointer(peb->Ldr, sizeof(PEB_LDR_DATA)))
+			{
+				if (!peb->Ldr->Initialized)
+				{
+					int initLoadCount = 0;
+					while (!peb->Ldr->Initialized && initLoadCount++ < 4)
+					{
+						DriverSleep(250);
+					}
+				}
+
+				if (peb->Ldr->Initialized)
+				{
+					PLIST_ENTRY head = &peb->Ldr->InLoadOrderModuleList;
+					PLIST_ENTRY current = head->Flink;
+
+					while (current != head && count < MAX_MODULES)
+					{
+						PLDR_DATA_TABLE_ENTRY entry = CONTAINING_RECORD(current, LDR_DATA_TABLE_ENTRY, InLoadOrderLinks);
+
+						if (!SanitizeUserPointer(entry, sizeof(LDR_DATA_TABLE_ENTRY)))
+							break;
+
+						if (entry->DllBase == NULL)
+							break;
+
+						kernelBuffer[count].ModuleBase = entry->DllBase;
+						kernelBuffer[count].ModuleImageSize = entry->SizeOfImage;
+						kernelBuffer[count].ModuleEntryPoint = entry->EntryPoint;
+
+						if (entry->FullDllName.Buffer && entry->FullDllName.Length > 0)
+						{
+							USHORT copyLen = entry->FullDllName.Length;
+							if (copyLen > 255 * sizeof(WCHAR))
+								copyLen = 255 * sizeof(WCHAR);
+							RtlCopyMemory(kernelBuffer[count].ModuleFileName, entry->FullDllName.Buffer, copyLen);
+						}
+
+						count++;
+						current = current->Flink;
+					}
+				}
+			}
+		}
+		__except (GetExceptionCode())
+		{
+			DbgPrintEx(0, 0, "GetModuleList: PEB walk failed.\n");
+		}
+	}
+	__finally
+	{
+		KeUnstackDetachProcess(&state);
+	}
+
+	int expectedSize = count * sizeof(MODULE_SUMMARY);
+
+	if (!moduleBuffer || bufferSize < expectedSize)
+	{
+		*requiredBufferSize = expectedSize;
+		ExFreePool(kernelBuffer);
+		ObDereferenceObject(targetProcess);
+		return STATUS_SUCCESS;
+	}
+
+	RtlCopyMemory(moduleBuffer, kernelBuffer, expectedSize);
+	*moduleCount = count;
+	*requiredBufferSize = expectedSize;
+
+	ExFreePool(kernelBuffer);
+	ObDereferenceObject(targetProcess);
+
+	return STATUS_SUCCESS;
+}

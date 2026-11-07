@@ -17,6 +17,19 @@ namespace KsDumper11.Driver
 
         public static readonly uint IO_UNLOAD_DRIVER = CTL_CODE(FILE_DEVICE_UNKNOWN, 0x1726, METHOD_BUFFERED, FILE_ANY_ACCESS);
 
+        public static readonly uint IO_GET_MODULE_LIST = CTL_CODE(FILE_DEVICE_UNKNOWN, 0x1727, METHOD_BUFFERED, FILE_ANY_ACCESS);
+
+        public struct KERNEL_MODULE_LIST_OPERATION
+        {
+            public int targetProcessId;
+
+            public ulong bufferAddress;
+
+            public int bufferSize;
+
+            public int moduleCount;
+        }
+
         public struct KERNEL_PROCESS_LIST_OPERATION
 		{
 			public ulong bufferAddress;

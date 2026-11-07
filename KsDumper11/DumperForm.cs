@@ -369,6 +369,13 @@ namespace KsDumper11
             this.DumpProcess(targetProcess);
         }
 
+        private void viewModulesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProcessSummary targetProcess = this.processList.SelectedItems[0].Tag as ProcessSummary;
+            ModuleListForm moduleForm = new ModuleListForm(this.driver, this.dumper, targetProcess);
+            moduleForm.ShowDialog(this);
+        }
+
         private void Logger_OnLog(string message)
         {
             this.logsTextBox.Invoke(new Action(delegate ()

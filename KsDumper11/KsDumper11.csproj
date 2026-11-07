@@ -104,6 +104,12 @@
     <Compile Include="JsonSettings.cs" />
     <Compile Include="JsonSettingsManager.cs" />
     <Compile Include="LabelDrawer.cs" />
+    <Compile Include="ModuleListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModuleListForm.Designer.cs">
+      <DependentUpon>ModuleListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProviderSelector.cs">
       <SubType>Form</SubType>
     </Compile>

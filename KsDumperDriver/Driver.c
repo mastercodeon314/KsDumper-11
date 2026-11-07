@@ -101,6 +101,24 @@ NTSTATUS IoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp)
 			bytesIO = 0;
 		}
 	}
+	else if (controlCode == IO_GET_MODULE_LIST)
+	{
+		if (stack->Parameters.DeviceIoControl.InputBufferLength == sizeof(KERNEL_MODULE_LIST_OPERATION) &&
+			stack->Parameters.DeviceIoControl.OutputBufferLength == sizeof(KERNEL_MODULE_LIST_OPERATION))
+		{
+			PKERNEL_MODULE_LIST_OPERATION request = (PKERNEL_MODULE_LIST_OPERATION)Irp->AssociatedIrp.SystemBuffer;
+
+			GetModuleList(request->targetProcessId, request->bufferAddress, request->bufferSize, &request->bufferSize, &request->moduleCount);
+
+			status = STATUS_SUCCESS;
+			bytesIO = sizeof(KERNEL_MODULE_LIST_OPERATION);
+		}
+		else
+		{
+			status = STATUS_INFO_LENGTH_MISMATCH;
+			bytesIO = 0;
+		}
+	}
 	else if (controlCode == IO_UNLOAD_DRIVER)
 	{
 		Unload(NULL);

@@ -20,6 +20,7 @@
             this.logsTextBox = new System.Windows.Forms.RichTextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.dumpMainModuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewModulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.openInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.suspendProcessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,13 +81,14 @@
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dumpMainModuleToolStripMenuItem,
+            this.viewModulesToolStripMenuItem,
             this.toolStripSeparator1,
             this.openInExplorerToolStripMenuItem,
             this.suspendProcessToolStripMenuItem,
             this.resumeProcessToolStripMenuItem,
             this.killProcessToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(163, 120);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(163, 142);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // dumpMainModuleToolStripMenuItem
@@ -95,7 +97,14 @@
             this.dumpMainModuleToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.dumpMainModuleToolStripMenuItem.Text = "Dump Process";
             this.dumpMainModuleToolStripMenuItem.Click += new System.EventHandler(this.dumpMainModuleToolStripMenuItem_Click);
-            // 
+            //
+            // viewModulesToolStripMenuItem
+            //
+            this.viewModulesToolStripMenuItem.Name = "viewModulesToolStripMenuItem";
+            this.viewModulesToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.viewModulesToolStripMenuItem.Text = "View Modules";
+            this.viewModulesToolStripMenuItem.Click += new System.EventHandler(this.viewModulesToolStripMenuItem_Click);
+            //
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -405,6 +414,7 @@
 		private System.Windows.Forms.ToolStripMenuItem suspendProcessToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem resumeProcessToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem killProcessToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem viewModulesToolStripMenuItem;
 		private System.Windows.Forms.Button fileDumpBtn;
 		private DarkControls.Controls.WindowsDefaultTitleBarButton closeBtn;
 		private DarkControls.Controls.TransparentLabel titleLbl;
