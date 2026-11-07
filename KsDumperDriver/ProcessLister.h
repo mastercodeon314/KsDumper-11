@@ -11,6 +11,14 @@ typedef struct _PROCESS_SUMMARY
 	PVOID MainModuleEntryPoint;
 	BOOLEAN WOW64;
 } PROCESS_SUMMARY, *PPROCESS_SUMMARY;
+
+typedef struct _MODULE_SUMMARY
+{
+	PVOID ModuleBase;
+	WCHAR ModuleFileName[256];
+	UINT32 ModuleImageSize;
+	PVOID ModuleEntryPoint;
+} MODULE_SUMMARY, *PMODULE_SUMMARY;
 #pragma pack(pop)
 
 typedef struct _SYSTEM_PROCESS_INFORMATION
@@ -121,3 +129,5 @@ typedef struct _PE_HEADER {
 								== IMAGE_NT_OPTIONAL_HDR32_MAGIC)
 
 NTSTATUS GetProcessList(PVOID listedProcessBuffer, INT32 bufferSize, PINT32 requiredBufferSize, PINT32 processCount);
+
+NTSTATUS GetModuleList(INT32 targetProcessId, PVOID moduleBuffer, INT32 bufferSize, PINT32 requiredBufferSize, PINT32 moduleCount);

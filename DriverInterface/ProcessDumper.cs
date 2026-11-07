@@ -134,6 +134,58 @@ namespace KsDumper11
 			return false;
 		}
 
+		public bool DumpModule(int processId, ulong moduleBase, bool isWow64, string moduleName, out PEFile outputFile)
+		{
+			IntPtr basePointer = (IntPtr)((long)moduleBase);
+			NativePEStructs.IMAGE_DOS_HEADER dosHeader = this.ReadProcessStruct<NativePEStructs.IMAGE_DOS_HEADER>(processId, basePointer);
+			outputFile = null;
+			Logger.SkipLine();
+			Logger.Log("Targeting Module: {0} in PID {1}", new object[] { moduleName, processId });
+			bool isValid = dosHeader.IsValid;
+			if (isValid)
+			{
+				IntPtr peHeaderPointer = basePointer + dosHeader.e_lfanew;
+				Logger.Log("PE Header Found: 0x{0:x8}", new object[] { peHeaderPointer.ToInt64() });
+				IntPtr dosStubPointer = basePointer + Marshal.SizeOf<NativePEStructs.IMAGE_DOS_HEADER>();
+				byte[] dosStub = this.ReadProcessBytes(processId, dosStubPointer, dosHeader.e_lfanew - Marshal.SizeOf<NativePEStructs.IMAGE_DOS_HEADER>());
+				PEFile peFile;
+				if (!isWow64)
+				{
+					peFile = this.Dump64BitPE(processId, dosHeader, dosStub, peHeaderPointer);
+				}
+				else
+				{
+					peFile = this.Dump32BitPE(processId, dosHeader, dosStub, peHeaderPointer);
+				}
+				if (peFile != null)
+				{
+					IntPtr sectionHeaderPointer = peHeaderPointer + peFile.GetFirstSectionHeaderOffset();
+					Logger.Log("Header is valid ({0}) !", new object[] { peFile.Type });
+					Logger.Log("Parsing {0} Sections...", new object[] { peFile.Sections.Length });
+					for (int i = 0; i < peFile.Sections.Length; i++)
+					{
+						NativePEStructs.IMAGE_SECTION_HEADER sectionHeader = this.ReadProcessStruct<NativePEStructs.IMAGE_SECTION_HEADER>(processId, sectionHeaderPointer);
+						peFile.Sections[i] = new PESection
+						{
+							Header = PESection.PESectionHeader.FromNativeStruct(sectionHeader),
+							InitialSize = (int)sectionHeader.VirtualSize
+						};
+						this.ReadSectionContent(processId, new IntPtr(basePointer.ToInt64() + (long)((ulong)sectionHeader.VirtualAddress)), peFile.Sections[i]);
+						sectionHeaderPointer += Marshal.SizeOf<NativePEStructs.IMAGE_SECTION_HEADER>();
+					}
+					Logger.Log("Aligning Sections...", Array.Empty<object>());
+					peFile.AlignSectionHeaders();
+					Logger.Log("Fixing PE Header...", Array.Empty<object>());
+					peFile.FixPEHeader();
+					Logger.Log("Module Dump Completed !", Array.Empty<object>());
+					outputFile = peFile;
+					return true;
+				}
+				Logger.Log("Bad PE Header !", Array.Empty<object>());
+			}
+			return false;
+		}
+
 		// Token: 0x06000032 RID: 50 RVA: 0x00003DD4 File Offset: 0x00001FD4
 		private PEFile Dump64BitPE(int processId, NativePEStructs.IMAGE_DOS_HEADER dosHeader, byte[] dosStub, IntPtr peHeaderPointer)
 		{

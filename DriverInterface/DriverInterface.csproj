@@ -63,6 +63,7 @@
     <Compile Include="PE\NativePEStructs.cs" />
     <Compile Include="PE\PEFile.cs" />
     <Compile Include="PE\PESection.cs" />
+    <Compile Include="ModuleSummary.cs" />
     <Compile Include="ProcessDumper.cs" />
     <Compile Include="ProcessSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

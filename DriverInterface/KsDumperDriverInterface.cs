@@ -90,6 +90,71 @@ namespace KsDumper11.Driver
 			return 0;
 		}
 
+		public bool GetModuleList(int processId, out ModuleSummary[] result)
+		{
+			result = new ModuleSummary[0];
+			if (this.driverHandle == WinApi.INVALID_HANDLE_VALUE)
+				return false;
+
+			int requiredBufferSize = this.GetModuleListRequiredBufferSize(processId);
+			if (requiredBufferSize <= 0)
+				return false;
+
+			IntPtr bufferPointer = MarshalUtility.AllocZeroFilled(requiredBufferSize);
+			Operations.KERNEL_MODULE_LIST_OPERATION operation = new Operations.KERNEL_MODULE_LIST_OPERATION
+			{
+				targetProcessId = processId,
+				bufferAddress = (ulong)bufferPointer.ToInt64(),
+				bufferSize = requiredBufferSize
+			};
+			IntPtr operationPointer = MarshalUtility.CopyStructToMemory<Operations.KERNEL_MODULE_LIST_OPERATION>(operation);
+			int operationSize = Marshal.SizeOf<Operations.KERNEL_MODULE_LIST_OPERATION>();
+			bool success = WinApi.DeviceIoControl(this.driverHandle, Operations.IO_GET_MODULE_LIST, operationPointer, operationSize, operationPointer, operationSize, IntPtr.Zero, IntPtr.Zero);
+
+			if (success)
+			{
+				operation = MarshalUtility.GetStructFromMemory<Operations.KERNEL_MODULE_LIST_OPERATION>(operationPointer, true);
+				if (operation.moduleCount > 0)
+				{
+					byte[] managedBuffer = new byte[requiredBufferSize];
+					Marshal.Copy(bufferPointer, managedBuffer, 0, requiredBufferSize);
+					Marshal.FreeHGlobal(bufferPointer);
+					result = new ModuleSummary[operation.moduleCount];
+					using (BinaryReader reader = new BinaryReader(new MemoryStream(managedBuffer)))
+					{
+						for (int i = 0; i < result.Length; i++)
+						{
+							result[i] = ModuleSummary.FromStream(reader);
+						}
+					}
+					return true;
+				}
+			}
+			Marshal.FreeHGlobal(bufferPointer);
+			return false;
+		}
+
+		private int GetModuleListRequiredBufferSize(int processId)
+		{
+			Operations.KERNEL_MODULE_LIST_OPERATION operation = new Operations.KERNEL_MODULE_LIST_OPERATION
+			{
+				targetProcessId = processId
+			};
+			IntPtr operationPointer = MarshalUtility.CopyStructToMemory<Operations.KERNEL_MODULE_LIST_OPERATION>(operation);
+			int operationSize = Marshal.SizeOf<Operations.KERNEL_MODULE_LIST_OPERATION>();
+			bool success = WinApi.DeviceIoControl(this.driverHandle, Operations.IO_GET_MODULE_LIST, operationPointer, operationSize, operationPointer, operationSize, IntPtr.Zero, IntPtr.Zero);
+
+			if (success)
+			{
+				operation = MarshalUtility.GetStructFromMemory<Operations.KERNEL_MODULE_LIST_OPERATION>(operationPointer, true);
+				if (operation.moduleCount == 0 && operation.bufferSize > 0)
+				{
+					return operation.bufferSize;
+				}
+			}
+			return 0;
+		}
+
 		public bool CopyVirtualMemory(int targetProcessId, IntPtr targetAddress, IntPtr bufferAddress, int bufferSize)
 		{
 			bool flag = this.driverHandle != WinApi.INVALID_HANDLE_VALUE;
